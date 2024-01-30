@@ -28,6 +28,10 @@ class Game:
         self.current_player = PlayerOrder.PLAYER1
 
     # REQUESTS
+    def get_board(self) -> np.ndarray:
+        """Return the board"""
+        return self.board
+
     def get_initial_board(self) -> np.ndarray:
         """Return an initial board given the config"""
         board_width = self.config.game.board_width
