@@ -1,9 +1,10 @@
 from .utils.manager_func import match_manager
 from .manager.user_manager import UserManager
+from .game.game import Game, BoardState
 from .manager.manager import Manager
 from .config import load_config
-from .game.game import Game
 from typing import Optional
+import numpy as np
 import logging
 import eel
 
@@ -15,6 +16,8 @@ class App:
 
         self.player1: Optional[Manager] = None
         self.player2: Optional[Manager] = None
+
+        self.game = None
 
     def run(self) -> None:
         """Run the app with the given config"""
@@ -31,17 +34,24 @@ class App:
             f" and Player 2 is using {self.config.user.player2_algorithm}"
         )
 
+        self.game = Game(
+            self.config, {
+                "player1": self.player1.get_move,
+                "player2": self.player2.get_move
+            }
+        )
+
         if self.config.graphics.graphics_enabled:
             eel.init("src/graphics/web")
             self.expose_functions()
-        else:
-            game = Game(
-                self.config, {
-                    "player1": self.player1.get_move,
-                    "player2": self.player2.get_move
-                }
+            eel.start(
+                "index.html",
+                mode="firefox",
+                cmdline_args=["--start-fullscreen"],
+                shutdown_delay=3
             )
-            game.run()
+        else:
+            self.game.run()
 
     def expose_functions(self) -> None:
         """Expose functions to JavaScript"""
@@ -57,3 +67,17 @@ class App:
             self.player1.set_move((x, y))
         elif player == 2 and isinstance(self.player2, UserManager):
             self.player2.set_move((x, y))
+
+    def eel_update_game(self) -> None:
+        """Update the game"""
+        if self.game:
+            self.game.update()
+
+    def eel_get_board(self) -> Optional[list[list[BoardState]]]:
+        """Return the board"""
+        if self.game:
+            board = self.game.get_board().tolist()
+            for row in board:
+                for i, cell in enumerate(row):
+                    row[i] = cell.value
+            return board
