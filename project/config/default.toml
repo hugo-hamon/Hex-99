@@ -1,12 +1,9 @@
 [user]
 player1_algorithm = "human"
-player2_algorithm = "human"
+player2_algorithm = "random"
 
 [graphics]
 graphics_enabled = true
-width = 1080
-height = 720
-title = "Hex - Pierre Praden & Hugo Hamon"
 
 [game]
 board_width = 11

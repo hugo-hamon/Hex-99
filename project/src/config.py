@@ -27,9 +27,6 @@ class User:
 @dataclass
 class Graphics:
     graphics_enabled: bool
-    width: int
-    height: int
-    title: str
 
 
 @dataclass
