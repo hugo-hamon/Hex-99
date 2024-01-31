@@ -27,6 +27,8 @@ class Game:
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
 
+        self.move_history = []
+
     # REQUESTS
     def get_board(self) -> np.ndarray:
         """Return the board"""
@@ -43,10 +45,26 @@ class Game:
         """Return True if the game is over"""
         return self.over
 
+    def get_current_player(self) -> PlayerOrder:
+        """Return the current player"""
+        return self.current_player
+
     # COMMANDS
     def update(self) -> None:
         """Update the game"""
-        raise NotImplementedError
+        if len(self.move_history) == self.config.game.board_width * self.config.game.board_height:
+            self.over = True
+            return
+        move = self.player_controllers[self.current_player.name](self)
+        if move is None or self.board[move] != BoardState.EMPTY:
+            return
+        self.move_history.append(move)
+        if self.current_player == PlayerOrder.PLAYER1:
+            self.board[move] = BoardState.PLAYER1
+        else:
+            self.board[move] = BoardState.PLAYER2
+
+        self.switch_player()
 
     def reset(self) -> None:
         """Reset the game"""
@@ -61,3 +79,11 @@ class Game:
     def __is_winning_move(self, move: tuple[int, int]) -> bool:
         """Return True if the given move is a winning move"""
         raise NotImplementedError
+
+    def switch_player(self) -> None:
+        """Switch the current player"""
+        other = {
+            PlayerOrder.PLAYER1: PlayerOrder.PLAYER2,
+            PlayerOrder.PLAYER2: PlayerOrder.PLAYER1
+        }
+        self.current_player = other[self.current_player]

@@ -1,6 +1,6 @@
+from .game.game import Game, BoardState, PlayerOrder
 from .utils.manager_func import match_manager
 from .manager.user_manager import UserManager
-from .game.game import Game, BoardState
 from .manager.manager import Manager
 from .config import load_config
 from typing import Optional
@@ -36,8 +36,8 @@ class App:
 
         self.game = Game(
             self.config, {
-                "player1": self.player1.get_move,
-                "player2": self.player2.get_move
+                PlayerOrder.PLAYER1.name: self.player1.get_move,
+                PlayerOrder.PLAYER2.name: self.player2.get_move
             }
         )
 
@@ -61,17 +61,30 @@ class App:
                 eel.expose(getattr(self, function))
 
     # eel functions
-    def set_player_move(self, player: int, x: int, y: int) -> None:
+    def eel_set_player_move(self, player: int, x: int, y: int) -> None:
         """Set the player move"""
         if player == 1 and isinstance(self.player1, UserManager):
             self.player1.set_move((x, y))
         elif player == 2 and isinstance(self.player2, UserManager):
             self.player2.set_move((x, y))
 
+    def eel_get_current_player(self) -> Optional[int]:
+        """Return the current player"""
+        if self.game:
+            return self.game.get_current_player().value
+
     def eel_update_game(self) -> None:
         """Update the game"""
         if self.game:
             self.game.update()
+
+    def eel_is_current_player_human(self) -> Optional[bool]:
+        """Return True if the other player is human"""
+        if self.game:
+            if self.game.get_current_player() == PlayerOrder.PLAYER1:
+                return isinstance(self.player1, UserManager)
+            else:
+                return isinstance(self.player2, UserManager)
 
     def eel_get_board(self) -> Optional[list[list[BoardState]]]:
         """Return the board"""
