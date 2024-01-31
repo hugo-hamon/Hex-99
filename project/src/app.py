@@ -73,6 +73,18 @@ class App:
         if self.game:
             return self.game.get_current_player().value
 
+    def eel_is_game_over(self) -> Optional[bool]:
+        """Return True if the game is over"""
+        if self.game:
+            return self.game.is_over()
+
+    def eel_get_winner(self) -> Optional[str]:
+        """Return the winner"""
+        if self.game:
+            winner = self.game.get_winner()
+            if winner:
+                return winner.name
+
     def eel_update_game(self) -> None:
         """Update the game"""
         if self.game:

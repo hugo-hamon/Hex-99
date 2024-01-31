@@ -1,8 +1,10 @@
+from ..utils.neighbors import hex_neighbors
 from typing import Callable
 from ..config import Config
-from ..utils.neighbors import hex_neighbors
+from typing import Optional
 from enum import Enum
 import numpy as np
+import tqdm
 
 
 class BoardState(Enum):
@@ -50,32 +52,57 @@ class Game:
         """Return the current player"""
         return self.current_player
 
+    def get_winner(self) -> Optional[PlayerOrder]:
+        """Return the winner"""
+        if self.over:
+            return self.current_player
+        return None
+
     # COMMANDS
     def update(self) -> None:
         """Update the game"""
+        if self.over:
+            return
         if len(self.move_history) == self.config.game.board_width * self.config.game.board_height:
             self.over = True
             return
         move = self.player_controllers[self.current_player.name](self)
         if move is None or self.board[move] != BoardState.EMPTY:
             return
+
         self.move_history.append(move)
         if self.current_player == PlayerOrder.PLAYER1:
             self.board[move] = BoardState.PLAYER1
         else:
             self.board[move] = BoardState.PLAYER2
-        if (self.__is_winning_move(move)):
+        if self.__is_winning_move(move):
             self.over = True
+            return
         self.switch_player()
 
     def reset(self) -> None:
         """Reset the game"""
-        raise NotImplementedError
+        self.board = self.get_initial_board()
+        self.over = False
+        self.current_player = PlayerOrder.PLAYER1
+        self.move_history = []
 
     def run(self) -> None:
         """Run the game"""
-        while not self.is_over():
-            self.update()
+        winner = {
+            PlayerOrder.PLAYER1: 0,
+            PlayerOrder.PLAYER2: 0
+        }
+        for _ in tqdm.tqdm(range(1000)):
+            while not self.is_over():
+                self.update()
+            player_winner = self.get_winner()
+            if player_winner:
+                winner[player_winner] += 1
+            self.reset()
+
+        print(f"Player 1 won {winner[PlayerOrder.PLAYER1]} times")
+        print(f"Player 2 won {winner[PlayerOrder.PLAYER2]} times")
 
     # UTILS
     def __is_winning_move(self, move: tuple[int, int]) -> bool:
@@ -88,29 +115,21 @@ class Game:
             edges = (0, self.config.game.board_width - 1)
         # Check if the move is on the edge
         if move[player] in edges:
-            return self.__isLinked(move, currentColor, player, edges[1])
+            return self.__is_linked(move, currentColor, player, edges[1])
         # Else check if the move is connected to 2+ neighbors of the same color
         # (Can't win otherwise)
         multiple = False
         for neighbor in hex_neighbors(move, (self.config.game.board_width, self.config.game.board_height)):
             if self.board[neighbor] == currentColor:
                 if multiple:
-                    return self.__isLinked(move, currentColor, player, edges[1])
+                    return self.__is_linked(move, currentColor, player, edges[1])
                 multiple = True
-        raise False
+        return False
 
-    def switch_player(self) -> None:
-        """Switch the current player"""
-        other = {
-            PlayerOrder.PLAYER1: PlayerOrder.PLAYER2,
-            PlayerOrder.PLAYER2: PlayerOrder.PLAYER1
-        }
-        self.current_player = other[self.current_player]
-
-    def __isLinked(self, move: tuple[int, int], currentColor: BoardState, player: PlayerOrder, size) -> bool:
+    def __is_linked(self, move: tuple[int, int], currentColor: BoardState, player: int, size) -> bool:
         """Return True if the given move is linked to both sides"""
         cache = {}
-        liste = [move]
+        liste = set([move])
         edgeLink1, edgeLink2 = False, False
         while len(liste) > 0:
             current = liste.pop()
@@ -119,12 +138,19 @@ class Game:
             cache[current] = True
             if current[player] == 0:
                 edgeLink1 = True
-            if current[player] == size - 1:
+            if current[player] == size:
                 edgeLink2 = True
             if edgeLink1 and edgeLink2:
                 return True
             for neighbor in hex_neighbors(current, (self.config.game.board_width, self.config.game.board_height)):
                 if self.board[neighbor] == currentColor:
-                    liste.append(neighbor)
+                    liste.add(neighbor)
         return False
 
+    def switch_player(self) -> None:
+        """Switch the current player"""
+        other = {
+            PlayerOrder.PLAYER1: PlayerOrder.PLAYER2,
+            PlayerOrder.PLAYER2: PlayerOrder.PLAYER1
+        }
+        self.current_player = other[self.current_player]
