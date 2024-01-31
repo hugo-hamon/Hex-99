@@ -4,18 +4,16 @@ def hex_neighbors(hexagon: tuple[int,int], size: tuple[int,int]) -> list[tuple[i
     """
     x, y = hexagon
     res = []
-    isLeftEdge, isRightEdge = (x == 0, x == size[0] - 1)
-    isTopEdge, isBottomEdge = (y == 0, y == size[1] - 1)
-    if not isLeftEdge:
+    if not (x == 0):
         res.append((x - 1, y))
-        if not isTopEdge:
-            res.append((x - 1, y - 1))
-    if not isRightEdge:
+    if not (x == size[0] - 1):
         res.append((x + 1, y))
-        if not isBottomEdge:
-            res.append((x + 1, y + 1))
-    if not isTopEdge:
+    if not (y == 0):
         res.append((x, y - 1))
-    if not isBottomEdge:
+    if not (y == size[1] - 1):
         res.append((x, y + 1))
+    if not (x == 0) and not (y == size[1] - 1):
+        res.append((x - 1, y + 1))
+    if not (x == size[0] - 1) and not (y == 0):
+        res.append((x + 1, y - 1))
     return res

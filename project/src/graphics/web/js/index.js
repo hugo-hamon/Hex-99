@@ -4,6 +4,7 @@ class HexagonGame {
         this.rowNumber = rowNumber;
         this.colNumber = colNumber;
         this.radius = radius;
+        this.over = false;
         this.centers = this.calculateCenters();
 
         this.canvas = document.getElementById('hexagon_canvas');
@@ -145,7 +146,21 @@ class HexagonGame {
         return centers;
     }
 
+    async checkGameOver() {
+        if (this.over) {
+            return true;
+        } else {
+            this.over = await eel.eel_is_game_over()();
+        }
+        return this.over;
+    }
+
     async handleClick(event) {
+        if (await this.checkGameOver()) {
+            console.log("Game Over");
+            return;
+        }
+
         let main = document.getElementsByClassName("main");
 
         let x = event.pageX - this.canvas.offsetLeft;
@@ -166,12 +181,16 @@ class HexagonGame {
 
     // update function update every 1s
     async update() {
+        if (await this.checkGameOver()) {
+            swal("Game Over", await eel.eel_get_winner()() + " wins!", "success");
+            clearInterval(this.updateInterval);
+            return;
+        }
         var current_player = await eel.eel_is_current_player_human()();
         if (current_player == false) {
             eel.eel_update_game()();
             displayBoard(this);
         }
-        console.log("update");
     }
 }
 
@@ -192,7 +211,6 @@ async function displayBoard(hexagonGame) {
         }
     }
 }
-
 
 async function main() {
     var hexagonRadius = 30;
