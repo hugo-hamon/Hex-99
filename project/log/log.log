@@ -1,8 +1,22 @@
-31-Jan-24 18:55:56 - root - INFO - Starting run.py
-31-Jan-24 18:55:56 - root - INFO - Using default config path : config/default.toml
-31-Jan-24 18:55:56 - root - INFO - Player 1 is using human and Player 2 is using random
-31-Jan-24 18:55:58 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-01-31 18:55:58] "GET /index.html HTTP/1.1" 200 2449 0.000000
-31-Jan-24 18:55:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-01-31 18:55:59] "GET /eel.js HTTP/1.1" 200 6160 0.000000
-31-Jan-24 18:55:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-01-31 18:55:59] "GET /css/index.css HTTP/1.1" 200 2852 0.000000
-31-Jan-24 18:55:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-01-31 18:55:59] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
-31-Jan-24 18:55:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-01-31 18:55:59] "GET /js/index.js HTTP/1.1" 200 7430 0.000000
+01-Feb-24 11:23:25 - root - INFO - Starting run.py
+01-Feb-24 11:23:25 - root - INFO - Using default config path : config/default.toml
+01-Feb-24 11:23:25 - root - INFO - Player 1 is using human and Player 2 is using human
+01-Feb-24 11:23:25 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:25] "GET /index.html HTTP/1.1" 200 2385 0.001737
+01-Feb-24 11:23:25 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:25] "GET /eel.js HTTP/1.1" 200 6160 0.000312
+01-Feb-24 11:23:25 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:25] "GET /css/index.css HTTP/1.1" 200 2717 0.000370
+01-Feb-24 11:23:25 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:25] "GET /js/index.js HTTP/1.1" 200 7932 0.000481
+01-Feb-24 11:23:25 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:25] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000576
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /html/strategy.html HTTP/1.1" 200 5549 0.000505
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /eel.js HTTP/1.1" 200 6160 0.000551
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /css/strategy.css HTTP/1.1" 200 3550 0.000434
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /asset/images/4x4_hex_grid.png HTTP/1.1" 200 13066 0.000654
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /asset/images/two_bridge_3.png HTTP/1.1" 200 28753 0.000535
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /asset/images/two_bridge.png HTTP/1.1" 200 14113 0.000541
+01-Feb-24 11:23:27 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:23:27] "GET /asset/images/two_bridge_2.png HTTP/1.1" 200 28678 0.000741
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /html/strategy.html HTTP/1.1" 200 5549 0.000707
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /eel.js HTTP/1.1" 200 6160 0.000275
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /css/strategy.css HTTP/1.1" 200 3550 0.000495
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /asset/images/4x4_hex_grid.png HTTP/1.1" 200 13066 0.000428
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /asset/images/two_bridge_3.png HTTP/1.1" 200 28753 0.000714
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /asset/images/two_bridge_2.png HTTP/1.1" 200 28678 0.000430
+01-Feb-24 11:24:16 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-01 11:24:16] "GET /asset/images/two_bridge.png HTTP/1.1" 200 14113 0.000515
