@@ -125,7 +125,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     color: #fff;
     margin: 0 auto;
     padding-top: 80px;
@@ -136,6 +135,7 @@ body {
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 20px;
+    text-align: center;
 }
 
 #strategy_text {
@@ -146,6 +146,14 @@ body {
     text-align: justify;
 }
 
+#strategy_subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 20px;
+    text-align: left;
+    color: #fff;
+}
+
 #strategy_text a {
     color: #fff;
     font-weight: 600;
@@ -153,4 +161,30 @@ body {
 
 #strategy_text a:hover {
     color: rgba(252, 41, 41, 0.9);
+}
+
+#strategy_img {
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin: 0 auto;
+}
+
+.image_container {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.item {
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+}
+
+.caption {
+    display: block;
 }

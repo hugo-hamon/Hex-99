@@ -1,12 +1,13 @@
 from .manager import Manager
 from ..game.game import Game
 from typing import Optional
+from ..config import Config
 
 
 class UserManager(Manager):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, config: Config) -> None:
+        super().__init__(config)
         self.current_move = None
 
     def set_move(self, move: tuple[int, int]) -> None:

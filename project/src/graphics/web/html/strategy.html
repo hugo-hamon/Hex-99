@@ -56,21 +56,63 @@
     </div>
     <!-- End Header -->
     <div class="main">
-        <h1 id="strategy_title">Stratégie du jeu de Hex</h1>
+        <h1 id="strategy_title">Quelques stratégies</h1>
+        <h2 id="strategy_subtitle">Notation</h2>
         <p id="strategy_text">
-            Le premier énoncé de la règle du jeu est l'œuvre de <a href="https://fr.wikipedia.org/wiki/Piet_Hein_(physicien)">Piet Hein</a> lors d'une 
-            conférence en 1942 au Parenthesis, l'association des mathématiciens de l'université 
-            de Copenhague. L'auteur cherchait alors à imaginer un jeu équitable, progressif, 
-            fini, clair, stratégique et décisif. Le jeu porte alors le nom de Polygone.
+            Les lignes du plateau sont indexées par des nombres et les colonnes par des lettres. 
+            Les hexagones individuels sont désignés par l'indice de la colonne suivi de l'indice 
+            de la ligne, par exemple l'hexagone c2 est celui de la colonne c, ligne 2. Dans cette 
+            implémentation du jeu Hex, les pièces rouges appartiennent au joueur "vertical", 
+            et les pièces bleues au joueur "horizontal". Un exemple de plateau 4x4 est donné ci-dessous.
         </p>
+        <img id="strategy_img" src="../asset/images/4x4_hex_grid.png" alt="4x4 hex grid">
+        <h2 id="strategy_subtitle">Le pont à deux voies</h2>
         <p id="strategy_text">
-            En 1948, et de manière indépendante, un jeune mathématicien de l'université de 
-            Princeton du nom de <a href="https://fr.wikipedia.org/wiki/John_Forbes_Nash">John Nash</a> réinvente le jeu et le diffuse au Fine Hall, 
-            une salle commune aux élèves et aux professeurs du département de mathématiques. 
-            Il en perçoit l'intérêt en théorie des jeux et démontre l'existence d'une stratégie 
-            gagnante pour le premier joueur. Cependant, sa preuve est non constructive, 
-            c'est-à-dire qu'elle n'indique pas de stratégie gagnante. En 1952, la société 
-            Parker Brothers commercialise le jeu aux États-Unis. 
+            La formation constituée de deux pièces non adjacentes mais ayant en commun 
+            deux hexagones voisins vides est appelée pont à deux voies, par exemple les 
+            pièces sur b2 et c3, et les hexagones vides b3 et c2 dans le diagramme 
+            suivant forment un pont à deux voies.
+        </p>
+        <img id="strategy_img" src="../asset/images/two_bridge.png" alt="two bridge">
+        <p id="strategy_text">
+            Les deux pièces sont étroitement liées, presque comme une chaîne solide 
+            allant de b2 à c3. L'adversaire peut essayer de rompre cette connexion en 
+            jouant une pièce soit en b3 soit en c2. Cependant, peu importe le choix de 
+            l'adversaire, vous pouvez jouer l'autre pièce et rétablir le lien. 
+            En général, on peut considérer que les deux pièces du pont sont déjà 
+            connectées. En reliant les pièces via ces ponts à deux, vous pouvez 
+            étendre votre influence sur le plateau deux fois plus rapidement que 
+            si vous jouiez sur des hexagones adjacents.
+        </p>
+        <div class="image_container">
+            <div class="item">
+                <img id="strategy_img" src="../asset/images/two_bridge_2.png" alt="two bridge">
+                <span class="caption">Expansions par un mouvement adjacent</span>
+            </div>
+            <div class="item">
+                <img id="strategy_img" src="../asset/images/two_bridge_3.png" alt="two bridge">
+                <span class="caption">Expansions par pont à deux voies</span>
+            </div>                        
+        </div>
+        <p id="strategy_text">
+            Les pièces dans une chaîne de deux sont connectées, mais parfois une chaîne de 
+            deux peut être rompue en jouant une pièce au milieu de la chaîne qui contient 
+            une autre menace qui doit être immédiatement contrée. Après que l'adversaire ai 
+            répondu la menace, vous pouvez alors jouer dans l'autre hexagone de la chaîne 
+            de deux, rompant ainsi la connexion. De plus, jouer au milieu d'une chaîne de 
+            deux peut être une bonne stratégie même lorsque l'adversaire devrait et répond 
+            effectivement en préservant la liaison. La raison en est que la pièce jouée peut 
+            s'avérer utile ultérieurement.
+        </p>
+        <h2 id="strategy_subtitle">Blocage</h2>
+        <p id="strategy_text">
+            Lorsque vous n'avez aucune pièce dans une zone, il est généralement préférable 
+            de commencer par bloquer de manière étendue, près d'au moins l'un de vos côtés, 
+            et pas trop près de la pièce de l'adversaire. Si votre mouvement de blocage a 
+            une influence insuffisante sur vos deux côtés, alors l'adversaire a au moins 
+            deux bonnes zones du plateau qui valent la peine d'être exploitées, 
+            une pour chaque côté. Par exemple, comparez la situation de la pièce bleue 
+            dans ces deux cas.
         </p>
     </div>
 </body>

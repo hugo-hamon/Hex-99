@@ -5,6 +5,7 @@ class HexagonGame {
         this.colNumber = colNumber;
         this.radius = radius;
         this.over = false;
+        this.offset = this.radius;
         this.centers = this.calculateCenters();
 
         this.canvas = document.getElementById('hexagon_canvas');
@@ -53,7 +54,19 @@ class HexagonGame {
     drawBoard() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         for (let i = 0; i < this.rowNumber; i++) {
+            // Draw row number
+            this.ctx.font = "1.5em Poppins";
+            this.ctx.fillStyle = "white";
+            this.ctx.fillText(i + 1, this.centers[i][0][0] - this.radius * 2, this.centers[i][0][1] + 10);
             for (let j = 0; j < this.colNumber; j++) {
+                // Draw col number
+                if (i == 0) {
+                    this.ctx.font = "1.5em Poppins";
+                    this.ctx.fillStyle = "white";
+                    // Letter A is 65 in ASCII
+                    this.ctx.fillText(String.fromCharCode(65 + j), this.centers[i][j][0] - this.radius, this.centers[i][j][1] - this.radius * 1.5);
+                }
+
                 this.drawHexagon(this.centers[i][j][0], this.centers[i][j][1]);
             }
         }
@@ -112,8 +125,8 @@ class HexagonGame {
 
         let apothem = this.radius * Math.sqrt(3) / 2;
 
-        this.canvas.width = 2 * apothem * this.colNumber + this.radius + apothem * (this.rowNumber - 1)
-        this.canvas.height = 2 * this.radius * this.rowNumber - ((this.rowNumber - 1) * (lossH - 1));
+        this.canvas.width = 2 * apothem * this.colNumber + this.radius + apothem * (this.rowNumber - 1) + this.offset + this.radius;
+        this.canvas.height = 2 * this.radius * this.rowNumber - ((this.rowNumber - 1) * (lossH - 1)) + this.offset * 1.5;
     }
 
     drawCircle(row, col, color) {
@@ -134,9 +147,9 @@ class HexagonGame {
             centers[i] = new Array(this.colNumber);
         }
 
-        let y = this.radius;
+        let y = this.radius + this.offset * 1.5;
         for (let i = 0; i < this.rowNumber; i++) {
-            let x = this.radius;
+            let x = this.radius + this.offset;
             for (let j = 0; j < this.colNumber; j++) {
                 centers[i][j] = [x + y * Math.sqrt(3) / 3, y];
                 x += this.radius * Math.sqrt(3);

@@ -78,6 +78,7 @@ class Game:
         if self.__is_winning_move(move):
             self.over = True
             return
+        # Comment this line to disable the switch player
         self.switch_player()
 
     def reset(self) -> None:
