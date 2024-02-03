@@ -130,15 +130,15 @@ body {
     padding-top: 80px;
 }
 
-#strategy_title {
-    font-size: 2.5rem;
+.strategy_title {
+    font-size: 3rem;
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 20px;
     text-align: center;
 }
 
-#strategy_text {
+.strategy_text {
     font-size: 1.2rem;
     font-weight: 400;
     margin-bottom: 20px;
@@ -146,24 +146,32 @@ body {
     text-align: justify;
 }
 
-#strategy_subtitle {
-    font-size: 2rem;
+.strategy_subtitle {
+    font-size: 2.2rem;
     font-weight: 600;
     margin-top: 20px;
     text-align: left;
     color: #fff;
 }
 
-#strategy_text a {
+.strategy_subsubtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 20px;
+    text-align: left;
+    color: #fff;
+}
+
+.strategy_text a {
     color: #fff;
     font-weight: 600;
 }
 
-#strategy_text a:hover {
+.strategy_text a:hover {
     color: rgba(252, 41, 41, 0.9);
 }
 
-#strategy_img {
+.strategy_img {
     height: auto;
     margin-top: 20px;
     margin-bottom: 20px;
