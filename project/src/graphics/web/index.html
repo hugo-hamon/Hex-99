@@ -56,7 +56,13 @@
     </div>
     <!-- End Header -->
     <div class="main">
-        <canvas id="hexagon_canvas"/>
+        <canvas id="hexagon_canvas"></canvas>
+        <div id="game_controls">
+            <button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
+            <button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
+            <button id="redo_button" class="game_button" onclick="redo()">Refaire</button>
+            <button id="pass_button" class="game_button" onclick="pass_turn()">Passer</button>
+        </div>
     </div>
 </body>
 

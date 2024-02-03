@@ -106,3 +106,27 @@ class App:
                 for i, cell in enumerate(row):
                     row[i] = cell.value
             return board
+        
+    def eel_reset_game(self) -> None:
+        """Reset the game"""
+        if self.game:
+            self.game.reset()
+            if self.player1:
+                self.player1.reset()
+            if self.player2:
+                self.player2.reset()
+
+    def eel_undo(self) -> None:
+        """Undo the last move"""
+        if self.game:
+            self.game.undo()
+
+    def eel_redo(self) -> None:
+        """Redo the last move"""
+        if self.game:
+            self.game.redo()
+
+    def eel_pass_turn(self) -> None:
+        """Pass the turn"""
+        if self.game:
+            self.game.pass_turn()

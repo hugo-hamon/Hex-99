@@ -1,6 +1,6 @@
 [user]
 player1_algorithm = "human"
-player2_algorithm = "human"
+player2_algorithm = "random"
 
 [graphics]
 graphics_enabled = true

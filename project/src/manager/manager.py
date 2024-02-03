@@ -14,3 +14,8 @@ class Manager(ABC):
     def get_move(self, game: Game) -> Optional[tuple[int, int]]:
         """Return a direction for a given algorithm"""
         return NotImplemented
+    
+    @abstractmethod
+    def reset(self) -> None:
+        """Reset the manager"""
+        return NotImplemented
