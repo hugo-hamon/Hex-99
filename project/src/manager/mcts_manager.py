@@ -1,7 +1,11 @@
-from ..game.game import Game, BoardState
+from __future__ import annotations
+from ..game.game import Game
 from .manager import Manager
 from typing import Optional
 from ..config import Config
+import numpy as np
+import random
+import math
 
 
 class MCTSManager(Manager):
@@ -11,4 +15,4 @@ class MCTSManager(Manager):
 
     def get_move(self, game: Game) -> Optional[tuple[int, int]]:
         """Return the current move"""
-        pass
+        raise NotImplementedError

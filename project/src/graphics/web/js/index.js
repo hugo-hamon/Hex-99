@@ -13,7 +13,12 @@ class HexagonGame {
         this.setCanvasSize();
 
         this.canvas.addEventListener('click', this.handleClick.bind(this), false);
-        this.updateInterval = setInterval(this.update.bind(this), 100);
+        this.getUpdateInterval();
+    }
+
+    async getUpdateInterval() {
+        let update_time = await eel.eel_get_update_time()();
+        this.updateInterval = setInterval(this.update.bind(this), update_time);
     }
 
     // REQUEST

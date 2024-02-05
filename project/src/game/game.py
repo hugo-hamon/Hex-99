@@ -1,3 +1,4 @@
+from __future__ import annotations
 from ..utils.neighbors import hex_neighbors
 from typing import Callable
 from ..config import Config
@@ -155,3 +156,39 @@ class Game:
             PlayerOrder.PLAYER2: PlayerOrder.PLAYER1
         }
         self.current_player = other[self.current_player]
+
+    def get_legal_moves(self) -> list[tuple[int, int]]:
+        """Return the legal moves"""
+        moves = []
+        for i in range(self.config.game.board_height):
+            for j in range(self.config.game.board_width):
+                if self.board[i, j] == BoardState.EMPTY:
+                    moves.append((i, j))
+        return moves
+        
+    def copy(self) -> Game:
+        """Return a copy of the game"""
+        game = Game(self.config, self.player_controllers)
+        game.board = self.board.copy()
+        game.over = self.over
+        game.current_player = self.current_player
+        game.move_history = self.move_history.copy()
+        return game
+    
+    def play(self, move: tuple[int, int]) -> None:
+        """Play the given move"""
+        self.move_history.append(move)
+        if self.current_player == PlayerOrder.PLAYER1:
+            self.board[move] = BoardState.PLAYER1
+        else:
+            self.board[move] = BoardState.PLAYER2
+        if self.__is_winning_move(move):
+            self.over = True
+            return
+        self.switch_player()
+
+    def get_value_and_terminated(self) -> tuple[int, bool]:
+        """Return the value and if the game is terminated"""
+        if self.over:
+            return 1, True
+        return 0, False

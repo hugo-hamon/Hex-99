@@ -106,3 +106,7 @@ class App:
                 for i, cell in enumerate(row):
                     row[i] = cell.value
             return board
+        
+    def eel_get_update_time(self) -> Optional[float]:
+        """Return the update time"""
+        return self.config.graphics.update_interval
