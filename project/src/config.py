@@ -1,21 +1,6 @@
 from dataclasses import dataclass
 from dacite.core import from_dict
 import toml
-"""
-[user]
-player1_algorithm = "human"
-player2_algorithm = "human"
-
-[graphics]
-graphics_enabled = true
-width = 1080
-height = 720
-title = "Hex - Pierre Praden & Hugo Hamon"
-
-[game]
-board_width = 11
-board_height = 11
-"""
 
 
 @dataclass

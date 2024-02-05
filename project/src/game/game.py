@@ -110,7 +110,7 @@ class Game:
             PlayerOrder.PLAYER1: 0,
             PlayerOrder.PLAYER2: 0
         }
-        for _ in tqdm.tqdm(range(1000)):
+        for _ in tqdm.tqdm(range(10000)):
             while not self.is_over():
                 self.update()
             player_winner = self.get_winner()
@@ -181,7 +181,7 @@ class Game:
         cache = {}
         liste = set([move])
         edgeLink1, edgeLink2 = False, False
-        while len(liste) > 0:
+        while liste:
             current = liste.pop()
             if current in cache:
                 continue

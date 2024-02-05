@@ -28,7 +28,6 @@ class RandomManager(Manager):
                 self.moves = None
                 return None
             move = self.moves[self.index]
-        self.index += 1
         return move
     
     def reset(self) -> None:
