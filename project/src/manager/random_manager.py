@@ -19,3 +19,7 @@ class RandomManager(Manager):
                 if board[i, j] == BoardState.EMPTY:
                     available_moves.append((i, j))
         return choice(available_moves)
+    
+    def reset(self) -> None:
+        """Reset the manager"""
+        pass

@@ -207,16 +207,14 @@ class HexagonGame {
         var current_player = await eel.eel_is_current_player_human()();
         if (current_player == false) {
             eel.eel_update_game()();
-            displayBoard(this);
         }
+        displayBoard(this);
     }
 }
 
 async function displayBoard(hexagonGame) {
     var board = await eel.eel_get_board()();
     hexagonGame.drawBoard();
-
-    // Time test
     
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
@@ -240,3 +238,27 @@ async function main() {
 }
 
 main();
+
+/*
+<button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
+<button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
+<button id="redo_button" class="game_button" onclick="redo()">Refaire</button>
+<button id="pass_button" class="game_button" onclick="pass()">Passer</button>
+*/
+
+async function reset() {
+    eel.eel_reset_game()();
+    main();
+}
+
+async function undo() {
+    eel.eel_undo()();
+}
+            
+async function redo() {
+    eel.eel_redo()();
+}
+
+async function pass_turn() {
+    eel.eel_pass_turn()();
+}

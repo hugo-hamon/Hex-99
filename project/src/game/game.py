@@ -21,6 +21,9 @@ class PlayerOrder(Enum):
     PLAYER2 = 2
 
 
+MOVE_TYPE = tuple[int, int]
+
+
 class Game:
 
     def __init__(self, config: Config, player_controllers: dict[str, Callable]) -> None:
@@ -31,7 +34,8 @@ class Game:
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
 
-        self.move_history = []
+        self.move_history: list[tuple[MOVE_TYPE, PlayerOrder]] = []
+        self.undo_history: list[tuple[MOVE_TYPE, PlayerOrder]] = []
 
     # REQUESTS
     def get_board(self) -> np.ndarray:
@@ -58,6 +62,15 @@ class Game:
         if self.over:
             return self.current_player
         return None
+    
+    def get_valid_moves(self) -> list[tuple[int, int]]:
+        """Return the valid moves"""
+        moves = []
+        for i in range(self.config.game.board_height):
+            for j in range(self.config.game.board_width):
+                if self.board[i, j] == BoardState.EMPTY:
+                    moves.append((i, j))
+        return moves
 
     # COMMANDS
     def update(self) -> None:
@@ -71,7 +84,8 @@ class Game:
         if move is None or self.board[move] != BoardState.EMPTY:
             return
 
-        self.move_history.append(move)
+        self.move_history.append((move, self.current_player))
+        self.undo_history = []
         if self.current_player == PlayerOrder.PLAYER1:
             self.board[move] = BoardState.PLAYER1
         else:
@@ -88,6 +102,7 @@ class Game:
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
         self.move_history = []
+        self.undo_history = []
 
     def run(self) -> None:
         """Run the game"""
@@ -105,6 +120,39 @@ class Game:
 
         print(f"Player 1 won {winner[PlayerOrder.PLAYER1]} times")
         print(f"Player 2 won {winner[PlayerOrder.PLAYER2]} times")
+
+    def undo(self) -> None:
+        """Undo the last move"""
+        if len(self.move_history) == 0:
+            return
+        move, player = self.move_history.pop()
+        self.undo_history.append((move, player))
+        self.board[move] = BoardState.EMPTY
+        self.switch_player()
+
+    def redo(self) -> None:
+        """Redo the last move"""
+        if len(self.undo_history) == 0:
+            return
+        move, player = self.undo_history.pop()
+        self.current_player = player
+        self.play(move)
+
+    def play(self, move: tuple[int, int]) -> None:
+        """Play a move"""
+        self.move_history.append((move, self.current_player))
+        if self.current_player == PlayerOrder.PLAYER1:
+            self.board[move] = BoardState.PLAYER1
+        else:
+            self.board[move] = BoardState.PLAYER2
+        if self.__is_winning_move(move):
+            self.over = True
+            return
+        self.switch_player()
+
+    def pass_turn(self) -> None:
+        """Pass the turn"""
+        self.switch_player()
 
     # UTILS
     def __is_winning_move(self, move: tuple[int, int]) -> bool:
@@ -156,39 +204,19 @@ class Game:
             PlayerOrder.PLAYER2: PlayerOrder.PLAYER1
         }
         self.current_player = other[self.current_player]
-
-    def get_legal_moves(self) -> list[tuple[int, int]]:
-        """Return the legal moves"""
-        moves = []
-        for i in range(self.config.game.board_height):
-            for j in range(self.config.game.board_width):
-                if self.board[i, j] == BoardState.EMPTY:
-                    moves.append((i, j))
-        return moves
-        
+    
     def copy(self) -> Game:
         """Return a copy of the game"""
-        game = Game(self.config, self.player_controllers)
-        game.board = self.board.copy()
-        game.over = self.over
-        game.current_player = self.current_player
-        game.move_history = self.move_history.copy()
-        return game
-    
-    def play(self, move: tuple[int, int]) -> None:
-        """Play the given move"""
-        self.move_history.append(move)
-        if self.current_player == PlayerOrder.PLAYER1:
-            self.board[move] = BoardState.PLAYER1
-        else:
-            self.board[move] = BoardState.PLAYER2
-        if self.__is_winning_move(move):
-            self.over = True
-            return
-        self.switch_player()
+        new_game = Game(self.config, self.player_controllers)
+        new_game.board = self.board.copy()
+        new_game.over = self.over
+        new_game.current_player = self.current_player
+        new_game.move_history = self.move_history.copy()
+        new_game.undo_history = self.undo_history.copy()
+        return new_game
 
-    def get_value_and_terminated(self) -> tuple[int, bool]:
-        """Return the value and if the game is terminated"""
+    def get_value_and_terminated(self) -> tuple[float, bool]:
+        """Return the value of the game and if it's terminated"""
         if self.over:
             return 1, True
         return 0, False

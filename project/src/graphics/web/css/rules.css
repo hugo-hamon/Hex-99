@@ -131,14 +131,14 @@ body {
     padding-top: 80px;
 }
 
-#rules_title {
+.rules_title {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
-#rules_text {
+.rules_text {
     font-size: 1.2rem;
     font-weight: 400;
     margin-bottom: 20px;
@@ -146,11 +146,11 @@ body {
     text-align: justify;
 }
 
-#rules_text a {
+.rules_text a {
     color: #fff;
     font-weight: 600;
 }
 
-#rules_text a:hover {
+.rules_text a:hover {
     color: rgba(252, 41, 41, 0.9);
 }

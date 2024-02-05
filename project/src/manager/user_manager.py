@@ -21,3 +21,7 @@ class UserManager(Manager):
         move = self.current_move
         self.current_move = None
         return move
+    
+    def reset(self) -> None:
+        """Reset the manager"""
+        self.current_move = None
