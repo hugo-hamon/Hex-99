@@ -1,9 +1,5 @@
 [user]
-<<<<<<< HEAD
-player1_algorithm = "random"
-=======
 player1_algorithm = "human"
->>>>>>> 4c3736b9c0a79b7ff2aa781ca4016ef4f4ee0df5
 player2_algorithm = "random"
 
 [graphics]

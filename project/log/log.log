@@ -1,19 +1,2 @@
-<<<<<<< HEAD
-02-Feb-24 12:13:23 - root - INFO - Starting run.py
-02-Feb-24 12:13:23 - root - INFO - Using default config path : config/default.toml
-02-Feb-24 12:13:23 - root - INFO - Player 1 is using random and Player 2 is using random
-02-Feb-24 12:13:23 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-02 12:13:23] "GET /index.html HTTP/1.1" 200 2385 0.001434
-02-Feb-24 12:13:24 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-02 12:13:24] "GET /eel.js HTTP/1.1" 200 6183 0.000441
-02-Feb-24 12:13:24 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-02 12:13:24] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000645
-02-Feb-24 12:13:24 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-02 12:13:24] "GET /js/index.js HTTP/1.1" 200 8074 0.000521
-02-Feb-24 12:13:24 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-02 12:13:24] "GET /css/index.css HTTP/1.1" 200 2717 0.000444
-=======
-03-Feb-24 13:27:47 - root - INFO - Starting run.py
-03-Feb-24 13:27:47 - root - INFO - Using default config path : config/default.toml
-03-Feb-24 13:27:47 - root - INFO - Player 1 is using human and Player 2 is using human
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /index.html HTTP/1.1" 200 2888 0.002001
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /eel.js HTTP/1.1" 200 6219 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000999
->>>>>>> 4c3736b9c0a79b7ff2aa781ca4016ef4f4ee0df5
+05-Feb-24 10:23:00 - root - INFO - Starting run.py
+05-Feb-24 10:23:00 - root - INFO - Using default config path : config/default.toml
