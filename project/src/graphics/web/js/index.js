@@ -206,6 +206,7 @@ class HexagonGame {
         }
         var current_player = await eel.eel_is_current_player_human()();
         if (current_player == false) {
+            console.log("AI is playing");
             eel.eel_update_game()();
         }
         displayBoard(this);
@@ -238,13 +239,6 @@ async function main() {
 }
 
 main();
-
-/*
-<button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
-<button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
-<button id="redo_button" class="game_button" onclick="redo()">Refaire</button>
-<button id="pass_button" class="game_button" onclick="pass()">Passer</button>
-*/
 
 async function reset() {
     eel.eel_reset_game()();

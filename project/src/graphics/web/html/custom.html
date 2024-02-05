@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="shortcut icon" href="#" />
-    <link rel="stylesheet" href="../css/history.css" />
+    <link rel="stylesheet" href="../css/custom.css" />
     <title>Hex</title>
 </head>
 
@@ -30,7 +30,7 @@
                         Règles
                     </a>
                 </div>
-                <div class="header_content_item header_content_item_active">
+                <div class="header_content_item">
                     <a href="history.html" class="header_content_link">
                         Histoire
                     </a>
@@ -45,7 +45,7 @@
                         Statistiques
                     </a>
                 </div>
-                <div class="header_content_item header_content_item_last">
+                <div class="header_content_item header_content_item_last header_content_item_active">
                     <a href="custom.html" class="header_content_link">
                         Personnalisation
                     </a>
@@ -56,24 +56,14 @@
     </div>
     <!-- End Header -->
     <div class="main">
-        <h1 class="history_title">Histoire du jeu de Hex</h1>
-        <p class="history_text">
-            Le premier énoncé de la règle du jeu est l'œuvre de <a href="https://fr.wikipedia.org/wiki/Piet_Hein_(physicien)">Piet Hein</a> lors d'une 
-            conférence en 1942 au Parenthesis, l'association des mathématiciens de l'université 
-            de Copenhague. L'auteur cherchait alors à imaginer un jeu équitable, progressif, 
-            fini, clair, stratégique et décisif. Le jeu porte alors le nom de Polygone.
-        </p>
-        <p class="history_text">
-            En 1948, et de manière indépendante, un jeune mathématicien de l'université de 
-            Princeton du nom de <a href="https://fr.wikipedia.org/wiki/John_Forbes_Nash">John Nash</a> réinvente le jeu et le diffuse au Fine Hall, 
-            une salle commune aux élèves et aux professeurs du département de mathématiques. 
-            Il en perçoit l'intérêt en théorie des jeux et démontre l'existence d'une stratégie 
-            gagnante pour le premier joueur. Cependant, sa preuve est non constructive, 
-            c'est-à-dire qu'elle n'indique pas de stratégie gagnante. En 1952, la société 
-            Parker Brothers commercialise le jeu aux États-Unis. 
-        </p>
-        <img class="history_image" src="../asset/images/John-Nash-2007.png" alt="John Nash">
+        <h1 class="custom_title">Personnalisation du jeu de Hex</h1>
+        <div id="custom_buttons">
+            <button id="load_config" class="custom_button" onclick="load_config()">Charger</button>
+            <button id="save_config" class="custom_button" onclick="save_config()">Sauvegarder</button>
+            <button id="apply_config" class="custom_button" onclick="apply_config()">Appliquer</button>
+        </div>
     </div>
 </body>
 
+<script src="../js/custom.js"></script>
 </html>

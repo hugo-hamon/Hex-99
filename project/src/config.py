@@ -27,7 +27,7 @@ class User:
 @dataclass
 class Graphics:
     graphics_enabled: bool
-    update_interval: float
+    update_interval: int
 
 
 @dataclass
