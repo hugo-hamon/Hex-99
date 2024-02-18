@@ -130,3 +130,8 @@ class App:
         """Pass the turn"""
         if self.game:
             self.game.pass_turn()
+
+    def eel_get_update_time(self) -> Optional[int]:
+        """Return the update time"""
+        if self.config:
+            return self.config.graphics.update_interval

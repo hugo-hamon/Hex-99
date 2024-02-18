@@ -1,9 +1,10 @@
 [user]
 player1_algorithm = "human"
-player2_algorithm = "random"
+player2_algorithm = "human"
 
 [graphics]
 graphics_enabled = true
+update_interval = 100
 
 [game]
 board_width = 11

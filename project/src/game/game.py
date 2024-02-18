@@ -110,7 +110,7 @@ class Game:
             PlayerOrder.PLAYER1: 0,
             PlayerOrder.PLAYER2: 0
         }
-        for _ in tqdm.tqdm(range(1000)):
+        for _ in tqdm.tqdm(range(10000)):
             while not self.is_over():
                 self.update()
             player_winner = self.get_winner()
@@ -180,8 +180,8 @@ class Game:
         """Return True if the given move is linked to both sides"""
         cache = {}
         liste = set([move])
-        edge_link1, edge_link2 = False, False
-        while len(liste) > 0:
+        edgeLink1, edgeLink2 = False, False
+        while liste:
             current = liste.pop()
             if current in cache:
                 continue
