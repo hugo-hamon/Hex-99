@@ -158,42 +158,42 @@ class Game:
     def __is_winning_move(self, move: tuple[int, int]) -> bool:
         """Return True if the given move is a winning move"""
         if self.current_player == PlayerOrder.PLAYER1:
-            currentColor, player = BoardState.PLAYER1, 0
+            current_color, player = BoardState.PLAYER1, 0
             edges = (0, self.config.game.board_height - 1)
         else:
-            currentColor, player = BoardState.PLAYER2, 1
+            current_color, player = BoardState.PLAYER2, 1
             edges = (0, self.config.game.board_width - 1)
         # Check if the move is on the edge
         if move[player] in edges:
-            return self.__is_linked(move, currentColor, player, edges[1])
+            return self.__is_linked(move, current_color, player, edges[1])
         # Else check if the move is connected to 2+ neighbors of the same color
         # (Can't win otherwise)
         multiple = False
         for neighbor in hex_neighbors(move, (self.config.game.board_width, self.config.game.board_height)):
-            if self.board[neighbor] == currentColor:
+            if self.board[neighbor] == current_color:
                 if multiple:
-                    return self.__is_linked(move, currentColor, player, edges[1])
+                    return self.__is_linked(move, current_color, player, edges[1])
                 multiple = True
         return False
 
-    def __is_linked(self, move: tuple[int, int], currentColor: BoardState, player: int, size) -> bool:
+    def __is_linked(self, move: tuple[int, int], current_color: BoardState, player: int, size) -> bool:
         """Return True if the given move is linked to both sides"""
         cache = {}
         liste = set([move])
-        edgeLink1, edgeLink2 = False, False
+        edge_link1, edge_link2 = False, False
         while len(liste) > 0:
             current = liste.pop()
             if current in cache:
                 continue
             cache[current] = True
             if current[player] == 0:
-                edgeLink1 = True
+                edge_link1 = True
             if current[player] == size:
-                edgeLink2 = True
-            if edgeLink1 and edgeLink2:
+                edge_link2 = True
+            if edge_link1 and edge_link2:
                 return True
             for neighbor in hex_neighbors(current, (self.config.game.board_width, self.config.game.board_height)):
-                if self.board[neighbor] == currentColor:
+                if self.board[neighbor] == current_color:
                     liste.add(neighbor)
         return False
 

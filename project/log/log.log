@@ -1,8 +1,43 @@
-03-Feb-24 13:27:47 - root - INFO - Starting run.py
-03-Feb-24 13:27:47 - root - INFO - Using default config path : config/default.toml
-03-Feb-24 13:27:47 - root - INFO - Player 1 is using human and Player 2 is using human
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /index.html HTTP/1.1" 200 2888 0.002001
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /eel.js HTTP/1.1" 200 6219 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
-03-Feb-24 13:27:47 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:27:47] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000999
+03-Feb-24 13:50:59 - root - INFO - Starting run.py
+03-Feb-24 13:50:59 - root - INFO - Using default config path : config/default.toml
+03-Feb-24 13:50:59 - root - INFO - Player 1 is using human and Player 2 is using random
+03-Feb-24 13:50:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:50:59] "GET /index.html HTTP/1.1" 200 2888 0.000999
+03-Feb-24 13:50:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:50:59] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:50:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:50:59] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.001106
+03-Feb-24 13:50:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:50:59] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
+03-Feb-24 13:50:59 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:50:59] "GET /js/index.js HTTP/1.1" 200 8736 0.002009
+03-Feb-24 13:51:03 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:51:03] "GET /index.html HTTP/1.1" 200 2888 0.000000
+03-Feb-24 13:51:03 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:51:03] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:51:03 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:51:03] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
+03-Feb-24 13:51:03 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:51:03] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
+03-Feb-24 13:51:03 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:51:03] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.004984
+03-Feb-24 13:52:17 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:17] "GET /html/rules.html HTTP/1.1" 200 3796 0.000000
+03-Feb-24 13:52:17 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:17] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:52:17 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:17] "GET /css/rules.css HTTP/1.1" 200 3191 0.008565
+03-Feb-24 13:52:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:18] "GET /html/history.html HTTP/1.1" 200 3727 0.000000
+03-Feb-24 13:52:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:19] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:52:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:19] "GET /css/history.css HTTP/1.1" 200 3199 0.000000
+03-Feb-24 13:52:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:19] "GET /asset/images/John-Nash-2007.png HTTP/1.1" 200 195145 0.000000
+03-Feb-24 13:52:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:19] "GET /html/strategy.html HTTP/1.1" 200 17281 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /css/strategy.css HTTP/1.1" 200 3880 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/4x4_hex_grid.png HTTP/1.1" 200 13066 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/two_bridge.png HTTP/1.1" 200 14113 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/two_bridge_2.png HTTP/1.1" 200 28678 0.001007
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_1.png HTTP/1.1" 200 78866 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_6.png HTTP/1.1" 200 78745 0.001002
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_5.png HTTP/1.1" 200 77912 0.000998
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/two_bridge_3.png HTTP/1.1" 200 28753 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_9.png HTTP/1.1" 200 75414 0.001000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_4.png HTTP/1.1" 200 79520 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_3.png HTTP/1.1" 200 79315 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_2.png HTTP/1.1" 200 78176 0.001011
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_7.png HTTP/1.1" 200 81839 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_10.png HTTP/1.1" 200 75677 0.000000
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/blocking_8.png HTTP/1.1" 200 77325 0.001010
+03-Feb-24 13:52:20 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:20] "GET /asset/images/general.png HTTP/1.1" 200 80507 0.000000
+03-Feb-24 13:52:41 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:41] "GET /index.html HTTP/1.1" 200 2888 0.000000
+03-Feb-24 13:52:41 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:41] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+03-Feb-24 13:52:41 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:41] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
+03-Feb-24 13:52:41 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:41] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
+03-Feb-24 13:52:41 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-03 13:52:41] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.004935
