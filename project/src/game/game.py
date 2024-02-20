@@ -71,6 +71,10 @@ class Game:
                 if self.board[i, j] == BoardState.EMPTY:
                     moves.append((i, j))
         return moves
+    
+    def get_move_history(self) -> list[tuple[MOVE_TYPE, PlayerOrder]]:
+        """Return the move history"""
+        return self.move_history
 
     # COMMANDS
     def update(self) -> None:
@@ -93,7 +97,6 @@ class Game:
         if self.__is_winning_move(move):
             self.over = True
             return
-        # Comment this line to disable the switch player
         self.switch_player()
 
     def reset(self) -> None:
@@ -169,7 +172,7 @@ class Game:
         # Else check if the move is connected to 2+ neighbors of the same color
         # (Can't win otherwise)
         multiple = False
-        for neighbor in hex_neighbors(move, (self.config.game.board_width, self.config.game.board_height)):
+        for neighbor in hex_neighbors(move, self.config):
             if self.board[neighbor] == currentColor:
                 if multiple:
                     return self.__is_linked(move, currentColor, player, edges[1])
@@ -192,7 +195,7 @@ class Game:
                 edgeLink2 = True
             if edgeLink1 and edgeLink2:
                 return True
-            for neighbor in hex_neighbors(current, (self.config.game.board_width, self.config.game.board_height)):
+            for neighbor in hex_neighbors(current, self.config):
                 if self.board[neighbor] == currentColor:
                     liste.add(neighbor)
         return False
