@@ -1,6 +1,6 @@
 [user]
 player1_algorithm = "human"
-player2_algorithm = "random"
+player2_algorithm = "minimax"
 
 [graphics]
 graphics_enabled = true
@@ -8,3 +8,6 @@ graphics_enabled = true
 [game]
 board_width = 11
 board_height = 11
+
+[minimax]
+depth = 3

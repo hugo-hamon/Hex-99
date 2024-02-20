@@ -1,7 +1,9 @@
-def hex_neighbors(hexagon: tuple[int,int], size: tuple[int,int]) -> list[tuple[int,int]]:
-    """
-    Returns the neighbors of a hexagon
-    """
+from ..config import Config
+
+
+def hex_neighbors(hexagon: tuple[int, int], config: Config) -> list[tuple[int, int]]:
+    """Returns the neighbors of a hexagon"""
+    size = (config.game.board_width, config.game.board_height)
     x, y = hexagon
     res = []
     if not (x == 0):
