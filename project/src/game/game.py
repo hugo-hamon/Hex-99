@@ -1,5 +1,6 @@
 from __future__ import annotations
 from ..utils.neighbors import hex_neighbors
+from .graph import GameGraphManager
 from typing import Callable
 from ..config import Config
 from typing import Optional
@@ -37,6 +38,8 @@ class Game:
         self.move_history: list[tuple[MOVE_TYPE, PlayerOrder]] = []
         self.undo_history: list[tuple[MOVE_TYPE, PlayerOrder]] = []
 
+        self.graphs = GameGraphManager(config, self.config.game.allow_backtrack)
+        
     # REQUESTS
     def get_board(self) -> np.ndarray:
         """Return the board"""
@@ -65,12 +68,13 @@ class Game:
     
     def get_valid_moves(self) -> list[tuple[int, int]]:
         """Return the valid moves"""
-        moves = []
-        for i in range(self.config.game.board_height):
-            for j in range(self.config.game.board_width):
-                if self.board[i, j] == BoardState.EMPTY:
-                    moves.append((i, j))
-        return moves
+        # moves = []
+        # for i in range(self.config.game.board_height):
+        #     for j in range(self.config.game.board_width):
+        #         if self.board[i, j] == BoardState.EMPTY:
+        #             moves.append((i, j))
+        # return moves
+        return self.graphs.get_valid_moves()
     
     def get_move_history(self) -> list[tuple[MOVE_TYPE, PlayerOrder]]:
         """Return the move history"""
@@ -87,21 +91,13 @@ class Game:
         move = self.player_controllers[self.current_player.name](self)
         if move is None or self.board[move] != BoardState.EMPTY:
             return
-
-        self.move_history.append((move, self.current_player))
-        self.undo_history = []
-        if self.current_player == PlayerOrder.PLAYER1:
-            self.board[move] = BoardState.PLAYER1
-        else:
-            self.board[move] = BoardState.PLAYER2
-        if self.__is_winning_move(move):
-            self.over = True
-            return
-        self.switch_player()
+        self.play(move)
+        return
 
     def reset(self) -> None:
         """Reset the game"""
         self.board = self.get_initial_board()
+        self.graphs = GameGraphManager(self.config, self.config.game.allow_backtrack)
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
         self.move_history = []
@@ -132,6 +128,7 @@ class Game:
         self.undo_history.append((move, player))
         self.board[move] = BoardState.EMPTY
         self.switch_player()
+        self.graphs.undo()
 
     def redo(self) -> None:
         """Redo the last move"""
@@ -148,7 +145,9 @@ class Game:
             self.board[move] = BoardState.PLAYER1
         else:
             self.board[move] = BoardState.PLAYER2
-        if self.__is_winning_move(move):
+        self.graphs.update(move, 0 if self.current_player == PlayerOrder.PLAYER1 else 1)
+        #if self.__is_winning_move(move):
+        if self.graphs.hasWon(0 if self.current_player == PlayerOrder.PLAYER1 else 1):
             self.over = True
             return
         self.switch_player()
