@@ -1,8 +1,10 @@
-25-Feb-24 15:04:51 - root - INFO - Starting run.py
-25-Feb-24 15:04:51 - root - INFO - Using default config path : config/default.toml
-25-Feb-24 15:04:51 - root - INFO - Player 1 is using human and Player 2 is using minimax
-25-Feb-24 15:04:51 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-25 15:04:51] "GET /index.html HTTP/1.1" 200 2818 0.001449
-25-Feb-24 15:04:51 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-25 15:04:51] "GET /eel.js HTTP/1.1" 200 6219 0.000373
-25-Feb-24 15:04:51 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-25 15:04:51] "GET /css/index.css HTTP/1.1" 200 3581 0.000528
-25-Feb-24 15:04:51 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-25 15:04:51] "GET /js/index.js HTTP/1.1" 200 8478 0.000663
-25-Feb-24 15:04:51 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-25 15:04:51] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.001263
+26-Feb-24 17:52:04 - root - INFO - Starting run.py
+26-Feb-24 17:52:04 - root - INFO - Using default config path : config/default.toml
+26-Feb-24 17:52:04 - root - INFO - Player 1 is using human and Player 2 is using minimax
+26-Feb-24 17:52:04 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 17:52:04] "GET /index.html HTTP/1.1" 200 2888 0.001999
+26-Feb-24 17:52:04 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 17:52:04] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+26-Feb-24 17:52:04 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 17:52:04] "GET /css/index.css HTTP/1.1" 200 3756 0.000999
+26-Feb-24 17:52:04 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 17:52:04] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
+26-Feb-24 17:52:04 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 17:52:04] "GET /js/index.js HTTP/1.1" 200 8736 0.001505
+26-Feb-24 17:53:56 - root - INFO - Minimax Tree size: 12721
+26-Feb-24 17:54:42 - root - INFO - Minimax Tree size: 12721

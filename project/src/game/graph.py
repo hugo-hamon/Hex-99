@@ -3,6 +3,7 @@ from ..utils.neighbors import hex_neighbors
 from itertools import combinations
 import matplotlib.pyplot as plt
 from ..config import Config
+from copy import deepcopy
 import networkx as nx
 import numpy as np
 
@@ -10,6 +11,7 @@ import numpy as np
 class GameGraphManager:
     """Graph representation of the game for both players"""
     def __init__(self, config: Config, allowBacktrack: bool = False) -> None:
+        self.config = config
         self.allowBacktrack = allowBacktrack
         self.playerGraphs = []
         for i in range(2):
@@ -18,7 +20,7 @@ class GameGraphManager:
     def update(self, move: tuple[int,int], player: int) -> None:
         assert player in [0, 1], "player should be 0 or 1"
         self.playerGraphs[player].update(move, True)
-        self.playerGraphs[1-player].update(move, False)
+        self.playerGraphs[1 - player].update(move, False)
 
     def undo(self) -> None:
         """Undo the last move"""
@@ -30,11 +32,7 @@ class GameGraphManager:
     def draw_graph(self, player) -> None:
         """Draw the graph of player in matplotlib"""
         assert player in [0, 1], "player should be 0 or 1"
-<<<<<<< HEAD
-        self.playerGraphs[player].drawGraph()
-=======
         self.playerGraphs[player].draw_graph()
->>>>>>> 95e311bdcd97c8647b7b333dd3c20c7c6a709b8a
         return
     
     def has_won(self, player) -> None:
@@ -46,24 +44,27 @@ class GameGraphManager:
     
     def get_game_graphs(self) -> tuple[GameGraph, GameGraph]:
         return self.playerGraphs[0], self.playerGraphs[1]
+    
+    def copy(self) -> GameGraphManager:
+        """Return a copy of this object"""
+        new_graph = GameGraphManager(self.config, self.allowBacktrack)
+        new_graph.playerGraphs = []
+        for graph in self.playerGraphs:
+            new_graph.playerGraphs.append(graph.copy())
+        return new_graph
 
 
 class GameGraph:
     """Graph representation of the game for a player"""
-    def __init__(self, config: Config, player: int, allowBacktrack: bool) -> None:
+    def __init__(self, config: Config, player: int, allowBacktrack: bool, copy=False) -> None:
         assert player in [0, 1], "player should be 0 or 1"
+        self.config = config
         self.size = (config.game.board_width, config.game.board_height)
         self.graph = nx.Graph()
         self.allowBacktrack = allowBacktrack
+        self.player = player
         if allowBacktrack :
             self.stackGraph = []
-
-        # Add connections
-        self.graph.add_nodes_from([(i, j) for i in range(self.size[0]) for j in range(self.size[1])])
-        for node in self.graph.nodes:
-            neig = hex_neighbors(node, config)
-            neigEdges = zip([(node)] * len(neig), neig)
-            self.graph.add_edges_from(neigEdges)
 
         # Add border connections
         edgeSize = self.size[player]
@@ -71,9 +72,17 @@ class GameGraph:
         order = 1 if player == 0 else -1
         self.start = (-1,0)[::order]
         self.end = (edgeSize,0)[::order]
-        for i in range(edgeSize):
-            self.graph.add_edge(self.start, (0,i)[::order])
-            self.graph.add_edge(self.end, (edgeSize-1,i)[::order])
+        if not copy:
+            # Add connections
+            self.graph.add_nodes_from([(i, j) for i in range(self.size[0]) for j in range(self.size[1])])
+            for node in self.graph.nodes:
+                neig = hex_neighbors(node, config)
+                neigEdges = zip([(node)] * len(neig), neig)
+                self.graph.add_edges_from(neigEdges)
+
+            for i in range(edgeSize):
+                self.graph.add_edge(self.start, (0,i)[::order])
+                self.graph.add_edge(self.end, (edgeSize-1,i)[::order])
         
     def update(self, move: tuple[int,int], isCurrentPlayer: bool) -> None:
         if self.allowBacktrack:
@@ -101,3 +110,11 @@ class GameGraph:
     
     def getNodes(self) -> list[tuple[int, int]]:
         return self.graph.nodes
+    
+    def copy(self) -> GameGraph:
+        """Return a copy of this object"""
+        new_graph = GameGraph(self.config, self.player, self.allowBacktrack, True)
+        new_graph.graph = self.graph.copy()
+        if self.allowBacktrack:
+            new_graph.stackGraph = deepcopy(self.stackGraph)
+        return new_graph
