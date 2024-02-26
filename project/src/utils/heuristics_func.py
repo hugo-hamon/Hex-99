@@ -16,6 +16,11 @@ class Heuristic(Enum):
 
 def evaluate(game: Game, player: PlayerOrder, heuristic: Heuristic) -> float:
     """Return a value for the given game state using the given heuristic"""
+    if game.is_over():
+        if game.get_winner() == player:
+            return float('inf')
+        return float('-inf')
+
     if heuristic == Heuristic.RANDOM:
         return random_heuristic()
     if heuristic == Heuristic.TWO_DISTANCE:
@@ -29,6 +34,9 @@ def random_heuristic() -> float:
 
 def two_distance(graph: GameGraphManager) -> float:
     """Return the difference between the two distances of each player"""
+    
+
+    
     gameGraph0, gameGraph1 = graph.get_game_graphs()
     start0 = gameGraph0.start
     start1 = gameGraph1.start
@@ -42,11 +50,6 @@ def two_distance(graph: GameGraphManager) -> float:
     d1s = get_two_distance(graph1, start1, highValue)
     d1e = get_two_distance(graph1, end1, highValue)
     values = {node: d0s[node] + d0e[node] - d1s[node] - d1e[node] for node in list(graph0.nodes)[:-2]}
-    # g = nx.DiGraph()
-    # g.add_nodes_from(values.keys())
-    # d = {node : np.array(node) for node in values.keys()}
-    # nx.draw(g, pos=d, labels=values, font_color='white')
-    # plt.show()
     return min(values.values()) 
     
 

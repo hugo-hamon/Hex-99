@@ -20,7 +20,7 @@ class GameGraphManager:
     def update(self, move: tuple[int,int], player: int) -> None:
         assert player in [0, 1], "player should be 0 or 1"
         self.playerGraphs[player].update(move, True)
-        self.playerGraphs[1-player].update(move, False)
+        self.playerGraphs[1 - player].update(move, False)
 
     def undo(self) -> None:
         """Undo the last move"""
@@ -55,7 +55,7 @@ class GameGraphManager:
 
 class GameGraph:
     """Graph representation of the game for a player"""
-    def __init__(self, config: Config, player: int, allowBacktrack: bool) -> None:
+    def __init__(self, config: Config, player: int, allowBacktrack: bool, copy=False) -> None:
         assert player in [0, 1], "player should be 0 or 1"
         self.config = config
         self.size = (config.game.board_width, config.game.board_height)
@@ -71,23 +71,24 @@ class GameGraph:
         self.start = (-1,edgeSize//2)[::order]
         self.end = (edgeSize,edgeSize//2)[::order]
 
-        # Add connections
-        self.graph.add_nodes_from([(i, j) for i in range(self.size[0]) for j in range(self.size[1])])
-        for node in self.graph.nodes:
-            neig = hex_neighbors(node, config)
-            neigEdges = zip([(node)] * len(neig), neig)
-            self.graph.add_edges_from(neigEdges)
-
-        # Add connections to fake nodes
-        for i in range(edgeSize):
-            self.graph.add_edge(self.start, (0,i)[::order])
-            self.graph.add_edge(self.end, (edgeSize-1,i)[::order])
-
         # Add border connections
-        for i,j in combinations(range(edgeSize), 2):
-            self.graph.add_edge((0,i)[::order], (0,j)[::order])
-            self.graph.add_edge((edgeSize-1,i)[::order], (edgeSize-1,j)[::order])
+        edgeSize = self.size[player]
+        # If it's the second player then switch the following coordinates backward 
+        order = 1 if player == 0 else -1
+        self.start = (-1,0)[::order]
+        self.end = (edgeSize,0)[::order]
+        if not copy:
+            # Add connections
+            self.graph.add_nodes_from([(i, j) for i in range(self.size[0]) for j in range(self.size[1])])
+            for node in self.graph.nodes:
+                neig = hex_neighbors(node, config)
+                neigEdges = zip([(node)] * len(neig), neig)
+                self.graph.add_edges_from(neigEdges)
 
+            for i in range(edgeSize):
+                self.graph.add_edge(self.start, (0,i)[::order])
+                self.graph.add_edge(self.end, (edgeSize-1,i)[::order])
+        
     def update(self, move: tuple[int,int], isCurrentPlayer: bool) -> None:
         if self.allowBacktrack:
             self.stackGraph.append(self.graph.copy())
@@ -117,7 +118,7 @@ class GameGraph:
     
     def copy(self) -> GameGraph:
         """Return a copy of this object"""
-        new_graph = GameGraph(self.config, self.player, self.allowBacktrack)
+        new_graph = GameGraph(self.config, self.player, self.allowBacktrack, True)
         new_graph.graph = self.graph.copy()
         if self.allowBacktrack:
             new_graph.stackGraph = deepcopy(self.stackGraph)

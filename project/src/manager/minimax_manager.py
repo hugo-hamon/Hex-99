@@ -55,7 +55,7 @@ class MinimaxManager(Manager):
         if depth == 0 or game.is_over():
             return Node(game, evaluate(game, game.get_current_player(), Heuristic.TWO_DISTANCE))
         children = []
-        for move in self.get_less_valid_moves(game):
+        for move in game.get_valid_moves():
             game_copy = game.copy()
             game_copy.play(move)
             children.append(self.build_tree(game_copy, depth - 1))

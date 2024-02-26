@@ -1,11 +1,11 @@
 from __future__ import annotations
-from ..utils.neighbors import hex_neighbors
 from .graph import GameGraphManager
 from typing import Callable
 from ..config import Config
 from typing import Optional
 from enum import Enum
 import numpy as np
+import cProfile
 import tqdm
 
 
@@ -68,12 +68,6 @@ class Game:
     
     def get_valid_moves(self) -> list[tuple[int, int]]:
         """Return the valid moves"""
-        # moves = []
-        # for i in range(self.config.game.board_height):
-        #     for j in range(self.config.game.board_width):
-        #         if self.board[i, j] == BoardState.EMPTY:
-        #             moves.append((i, j))
-        # return moves
         return self.graphs.get_valid_moves()
     
     def get_move_history(self) -> list[tuple[MOVE_TYPE, PlayerOrder]]:
@@ -88,7 +82,9 @@ class Game:
         if len(self.move_history) == self.config.game.board_width * self.config.game.board_height:
             self.over = True
             return
+        # test get move
         move = self.player_controllers[self.current_player.name](self)
+        cProfile.runctx('self.player_controllers[self.current_player.name](self)', globals(), locals(), filename='test_get_move.prof')
         if move is None or self.board[move] != BoardState.EMPTY:
             return
         self.play(move)
@@ -161,48 +157,6 @@ class Game:
         return self.graphs
 
     # UTILS
-    def __is_winning_move(self, move: tuple[int, int]) -> bool:
-        """Return True if the given move is a winning move"""
-        if self.current_player == PlayerOrder.PLAYER1:
-            currentColor, player = BoardState.PLAYER1, 0
-            edges = (0, self.config.game.board_height - 1)
-        else:
-            currentColor, player = BoardState.PLAYER2, 1
-            edges = (0, self.config.game.board_width - 1)
-        # Check if the move is on the edge
-        if move[player] in edges:
-            return self.__is_linked(move, currentColor, player, edges[1])
-        # Else check if the move is connected to 2+ neighbors of the same color
-        # (Can't win otherwise)
-        multiple = False
-        for neighbor in hex_neighbors(move, self.config):
-            if self.board[neighbor] == currentColor:
-                if multiple:
-                    return self.__is_linked(move, currentColor, player, edges[1])
-                multiple = True
-        return False
-
-    def __is_linked(self, move: tuple[int, int], currentColor: BoardState, player: int, size) -> bool:
-        """Return True if the given move is linked to both sides"""
-        cache = {}
-        liste = set([move])
-        edgeLink1, edgeLink2 = False, False
-        while len(liste) > 0:
-            current = liste.pop()
-            if current in cache:
-                continue
-            cache[current] = True
-            if current[player] == 0:
-                edgeLink1 = True
-            if current[player] == size:
-                edgeLink2 = True
-            if edgeLink1 and edgeLink2:
-                return True
-            for neighbor in hex_neighbors(current, self.config):
-                if self.board[neighbor] == currentColor:
-                    liste.add(neighbor)
-        return False
-
     def switch_player(self) -> None:
         """Switch the current player"""
         other = {
