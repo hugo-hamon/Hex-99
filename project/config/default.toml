@@ -6,8 +6,9 @@ player2_algorithm = "minimax"
 graphics_enabled = true
 
 [game]
-board_width = 9
-board_height = 9
+board_width = 11
+board_height = 11
+allow_backtrack = true
 
 [minimax]
 depth = 3

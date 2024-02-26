@@ -23,7 +23,7 @@ class Graphics:
 class Game:
     board_width: int
     board_height: int
-
+    allow_backtrack: bool
 
 @dataclass
 class Config:
