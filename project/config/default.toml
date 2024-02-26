@@ -1,6 +1,6 @@
 [user]
 player1_algorithm = "human"
-player2_algorithm = "minimax"
+player2_algorithm = "human"
 
 [graphics]
 graphics_enabled = true
