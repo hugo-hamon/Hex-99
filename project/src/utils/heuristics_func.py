@@ -57,34 +57,31 @@ def get_two_distance(graph: nx.graph, target: tuple[int,int], highValue: float) 
     progress = True
     while progress:
         progress = False
+        tempValues = {}
+        tempNodes = nodes.copy()
         for node in nodes:
             secondDelay = False
             for neighbor in sorted(graph.neighbors(node), key=lambda x: nodesValues[x] if x in nodesValues.keys() and nodesValues[x] != None else highValue):
                 if neighbor == target:
                     progress = True
-                    nodesValues[node] = 1
-                    nodes.remove(node)
+                    tempValues[node] = 1
+                    tempNodes.remove(node)
                     break
                 if neighbor not in nodesValues.keys():
                     continue
                 if nodesValues[neighbor] is not None:
                     if secondDelay == True:
                         progress = True
-                        nodesValues[node] = nodesValues[neighbor] + 1
-                        nodes.remove(node)
+                        tempValues[node] = nodesValues[neighbor] + 1
+                        tempNodes.remove(node)
                         break
                     secondDelay = True
-                else:
-                    break
+        nodesValues.update(tempValues)
+        nodes = tempNodes
     # For unreachable points, give high values
     for node in nodes:
         nodesValues[node] = highValue
     del nodesValues[target]
-    g = nx.DiGraph()
-    g.add_nodes_from(nodesValues.keys())
-    d = {node : np.array([node[0] + 0.5 * node[1], -node[1]]) for node in nodesValues.keys()}
-    nx.draw(g, pos=d, labels=nodesValues, font_color='white')
-    plt.show()
     return nodesValues
         
                 
