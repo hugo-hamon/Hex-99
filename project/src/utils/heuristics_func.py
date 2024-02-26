@@ -42,11 +42,11 @@ def two_distance(graph: GameGraphManager) -> float:
     d1s = get_two_distance(graph1, start1, highValue)
     d1e = get_two_distance(graph1, end1, highValue)
     values = {node: d0s[node] + d0e[node] - d1s[node] - d1e[node] for node in list(graph0.nodes)[:-2]}
-    g = nx.DiGraph()
-    g.add_nodes_from(values.keys())
-    d = {node : np.array(node) for node in values.keys()}
-    nx.draw(g, pos=d, labels=values, font_color='white')
-    plt.show()
+    # g = nx.DiGraph()
+    # g.add_nodes_from(values.keys())
+    # d = {node : np.array(node) for node in values.keys()}
+    # nx.draw(g, pos=d, labels=values, font_color='white')
+    # plt.show()
     return min(values.values()) 
     
 
@@ -74,10 +74,17 @@ def get_two_distance(graph: nx.graph, target: tuple[int,int], highValue: float) 
                         nodes.remove(node)
                         break
                     secondDelay = True
+                else:
+                    break
     # For unreachable points, give high values
     for node in nodes:
         nodesValues[node] = highValue
     del nodesValues[target]
+    g = nx.DiGraph()
+    g.add_nodes_from(nodesValues.keys())
+    d = {node : np.array([node[0] + 0.5 * node[1], -node[1]]) for node in nodesValues.keys()}
+    nx.draw(g, pos=d, labels=nodesValues, font_color='white')
+    plt.show()
     return nodesValues
         
                 

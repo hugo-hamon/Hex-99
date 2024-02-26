@@ -219,6 +219,7 @@ class Game:
         new_game.current_player = self.current_player
         new_game.move_history = self.move_history.copy()
         new_game.undo_history = self.undo_history.copy()
+        new_game.graphs = self.graphs.copy()
         return new_game
 
     def get_value_and_terminated(self) -> tuple[float, bool]:

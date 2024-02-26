@@ -3,6 +3,7 @@ from ..utils.neighbors import hex_neighbors
 from itertools import combinations
 import matplotlib.pyplot as plt
 from ..config import Config
+from copy import deepcopy
 import networkx as nx
 import numpy as np
 
@@ -10,6 +11,7 @@ import numpy as np
 class GameGraphManager:
     """Graph representation of the game for both players"""
     def __init__(self, config: Config, allowBacktrack: bool = False) -> None:
+        self.config = config
         self.allowBacktrack = allowBacktrack
         self.playerGraphs = []
         for i in range(2):
@@ -42,17 +44,32 @@ class GameGraphManager:
     
     def get_game_graphs(self) -> tuple[GameGraph, GameGraph]:
         return self.playerGraphs[0], self.playerGraphs[1]
-
+    
+    def copy(self) -> GameGraphManager:
+        """Return a copy of this object"""
+        new_graph = GameGraphManager(self.config, self.allowBacktrack)
+        new_graph.playerGraphs = []
+        for graph in self.playerGraphs:
+            new_graph.playerGraphs.append(graph.copy())
+        return new_graph
 
 class GameGraph:
     """Graph representation of the game for a player"""
     def __init__(self, config: Config, player: int, allowBacktrack: bool) -> None:
         assert player in [0, 1], "player should be 0 or 1"
+        self.config = config
         self.size = (config.game.board_width, config.game.board_height)
         self.graph = nx.Graph()
         self.allowBacktrack = allowBacktrack
+        self.player = player
         if allowBacktrack :
             self.stackGraph = []
+            
+        edgeSize = self.size[player]
+        # If it's the second player then switch the following coordinates backward 
+        order = 1 if player == 0 else -1
+        self.start = (-1,edgeSize//2)[::order]
+        self.end = (edgeSize,edgeSize//2)[::order]
 
         # Add connections
         self.graph.add_nodes_from([(i, j) for i in range(self.size[0]) for j in range(self.size[1])])
@@ -61,16 +78,16 @@ class GameGraph:
             neigEdges = zip([(node)] * len(neig), neig)
             self.graph.add_edges_from(neigEdges)
 
-        # Add border connections
-        edgeSize = self.size[player]
-        # If it's the second player then switch the following coordinates backward 
-        order = 1 if player == 0 else -1
-        self.start = (-1,0)[::order]
-        self.end = (edgeSize,0)[::order]
+        # Add connections to fake nodes
         for i in range(edgeSize):
             self.graph.add_edge(self.start, (0,i)[::order])
             self.graph.add_edge(self.end, (edgeSize-1,i)[::order])
-        
+
+        # Add border connections
+        for i,j in combinations(range(edgeSize), 2):
+            self.graph.add_edge((0,i)[::order], (0,j)[::order])
+            self.graph.add_edge((edgeSize-1,i)[::order], (edgeSize-1,j)[::order])
+
     def update(self, move: tuple[int,int], isCurrentPlayer: bool) -> None:
         if self.allowBacktrack:
             self.stackGraph.append(self.graph.copy())
@@ -83,7 +100,7 @@ class GameGraph:
 
     def draw_graph(self) -> None:
         """draw the graph in matplotlib"""
-        d = {node : np.array(node) for node in self.graph.nodes}
+        d = {node : np.array([node[0] + 0.5 * node[1], -node[1]]) for node in self.graph.nodes}
         nx.draw(self.graph, pos=d)
         plt.show()
         return
@@ -97,3 +114,11 @@ class GameGraph:
     
     def getNodes(self) -> list[tuple[int, int]]:
         return self.graph.nodes
+    
+    def copy(self) -> GameGraph:
+        """Return a copy of this object"""
+        new_graph = GameGraph(self.config, self.player, self.allowBacktrack)
+        new_graph.graph = self.graph.copy()
+        if self.allowBacktrack:
+            new_graph.stackGraph = deepcopy(self.stackGraph)
+        return new_graph
