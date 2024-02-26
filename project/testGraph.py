@@ -1,5 +1,6 @@
 from src.game.graph import GameGraphManager
 from src.config import load_config
+from src.utils.heuristics_func import *
 
 if __name__ == "__main__":
     path = "config/default.toml"
@@ -8,4 +9,6 @@ if __name__ == "__main__":
     G.update((0,0), 0)
     G.update((2, 1), 0)
     G.update((2, 2), 0)
+    G.draw_graph(0)
     print(G.get_valid_moves())
+

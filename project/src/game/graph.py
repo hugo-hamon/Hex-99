@@ -53,7 +53,6 @@ class GameGraphManager:
             new_graph.playerGraphs.append(graph.copy())
         return new_graph
 
-
 class GameGraph:
     """Graph representation of the game for a player"""
     def __init__(self, config: Config, player: int, allowBacktrack: bool, copy=False) -> None:
@@ -65,6 +64,12 @@ class GameGraph:
         self.player = player
         if allowBacktrack :
             self.stackGraph = []
+            
+        edgeSize = self.size[player]
+        # If it's the second player then switch the following coordinates backward 
+        order = 1 if player == 0 else -1
+        self.start = (-1,edgeSize//2)[::order]
+        self.end = (edgeSize,edgeSize//2)[::order]
 
         # Add border connections
         edgeSize = self.size[player]
@@ -96,7 +101,7 @@ class GameGraph:
 
     def draw_graph(self) -> None:
         """draw the graph in matplotlib"""
-        d = {node : np.array(node) for node in self.graph.nodes}
+        d = {node : np.array([node[0] + 0.5 * node[1], -node[1]]) for node in self.graph.nodes}
         nx.draw(self.graph, pos=d)
         plt.show()
         return
