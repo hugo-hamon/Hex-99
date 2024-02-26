@@ -30,7 +30,7 @@ class GameGraphManager:
     def drawGraph(self, player) -> None:
         """Draw the graph of player in matplotlib"""
         assert player in [0, 1], "player should be 0 or 1"
-        self.playerGraphs[player].exportGraph()
+        self.playerGraphs[player].drawGraph()
         return
     
     def hasWon(self, player) -> None:

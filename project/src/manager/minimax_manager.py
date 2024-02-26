@@ -1,11 +1,10 @@
 from ..utils.heuristics_func import Heuristic, evaluate
-from ..game.game import Game, BoardState, PlayerOrder
 from ..utils.neighbors import hex_neighbors
+from ..game.game import Game, BoardState
 from ..utils.node import Node
 from .manager import Manager
 from typing import Optional
 from ..config import Config
-from random import choice
 import logging
 
 
