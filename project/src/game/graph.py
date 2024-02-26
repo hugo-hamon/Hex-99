@@ -27,19 +27,21 @@ class GameGraphManager:
             self.playerGraphs[i].undo()
         return
     
-    def drawGraph(self, player) -> None:
+    def draw_graph(self, player) -> None:
         """Draw the graph of player in matplotlib"""
         assert player in [0, 1], "player should be 0 or 1"
-        self.playerGraphs[player].exportGraph()
+        self.playerGraphs[player].draw_graph()
         return
     
-    def hasWon(self, player) -> None:
+    def has_won(self, player) -> None:
         """Return if the player has won"""
-        return self.playerGraphs[player].hasWon()
+        return self.playerGraphs[player].has_won()
     
     def get_valid_moves(self) -> list[tuple[int, int]]:
-        baseMove = self.playerGraphs[0].getNodes()
         return list(self.playerGraphs[0].getNodes())[:-2]
+    
+    def get_game_graphs(self) -> tuple[GameGraph, GameGraph]:
+        return self.playerGraphs[0], self.playerGraphs[1]
 
 
 class GameGraph:
@@ -79,7 +81,7 @@ class GameGraph:
         self.graph.remove_node(move)
         return
 
-    def drawGraph(self) -> None:
+    def draw_graph(self) -> None:
         """draw the graph in matplotlib"""
         d = {node : np.array(node) for node in self.graph.nodes}
         nx.draw(self.graph, pos=d)
@@ -90,7 +92,7 @@ class GameGraph:
         self.graph = self.stackGraph.pop()
         return
     
-    def hasWon(self) -> bool:
+    def has_won(self) -> bool:
         return self.end in self.graph.neighbors(self.start)
     
     def getNodes(self) -> list[tuple[int, int]]:

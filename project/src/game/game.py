@@ -147,7 +147,7 @@ class Game:
             self.board[move] = BoardState.PLAYER2
         self.graphs.update(move, 0 if self.current_player == PlayerOrder.PLAYER1 else 1)
         #if self.__is_winning_move(move):
-        if self.graphs.hasWon(0 if self.current_player == PlayerOrder.PLAYER1 else 1):
+        if self.graphs.has_won(0 if self.current_player == PlayerOrder.PLAYER1 else 1):
             self.over = True
             return
         self.switch_player()
@@ -155,6 +155,10 @@ class Game:
     def pass_turn(self) -> None:
         """Pass the turn"""
         self.switch_player()
+
+    def get_game_graphs(self):
+        """Return the game graphs"""
+        return self.graphs
 
     # UTILS
     def __is_winning_move(self, move: tuple[int, int]) -> bool:
