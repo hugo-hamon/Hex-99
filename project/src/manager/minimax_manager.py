@@ -60,21 +60,3 @@ class MinimaxManager(Manager):
             game_copy.play(move)
             children.append(self.build_tree(game_copy, depth - 1))
         return Node(game, 0, children)
-
-    def get_less_valid_moves(self, game: Game) -> list[tuple[int, int]]:
-        """Return valid moves"""
-        if len(game.get_move_history()) == 0:
-            return [(game.get_board().shape[0] // 2, game.get_board().shape[1] // 2)]
-
-        valid_moves = game.get_valid_moves()
-        new_valid_moves = []
-        game_board = game.get_board()
-        for move in valid_moves:
-            neighbors = hex_neighbors(move, self.config)
-            for neighbor in neighbors:
-                if game_board[neighbor] != BoardState.EMPTY:
-                    new_valid_moves.append(move)
-                    break
-        if len(new_valid_moves) == 0:
-            return valid_moves
-        return new_valid_moves

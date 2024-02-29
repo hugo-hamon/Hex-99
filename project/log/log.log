@@ -1,17 +1,3 @@
-26-Feb-24 19:57:42 - root - INFO - Starting run.py
-26-Feb-24 19:57:42 - root - INFO - Using default config path : config/default.toml
-26-Feb-24 19:57:42 - root - INFO - Player 1 is using human and Player 2 is using minimax
-26-Feb-24 19:57:43 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 19:57:43] "GET /index.html HTTP/1.1" 200 2818 0.002761
-26-Feb-24 19:57:43 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 19:57:43] "GET /eel.js HTTP/1.1" 200 6219 0.000899
-26-Feb-24 19:57:43 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 19:57:43] "GET /css/index.css HTTP/1.1" 200 3581 0.000727
-26-Feb-24 19:57:43 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 19:57:43] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000643
-26-Feb-24 19:57:43 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 19:57:43] "GET /js/index.js HTTP/1.1" 200 8478 0.000520
-26-Feb-24 19:57:46 - root - INFO - Minimax Tree size: 51
-26-Feb-24 19:57:52 - root - INFO - Minimax Tree size: 123
-26-Feb-24 19:58:09 - root - INFO - Minimax Tree size: 190
-26-Feb-24 19:58:24 - root - INFO - Minimax Tree size: 163
-26-Feb-24 19:58:39 - root - INFO - Minimax Tree size: 161
-26-Feb-24 19:58:57 - root - INFO - Minimax Tree size: 215
-26-Feb-24 19:59:52 - root - INFO - Minimax Tree size: 214
-26-Feb-24 20:00:09 - root - INFO - Minimax Tree size: 162
-26-Feb-24 20:00:30 - root - INFO - Minimax Tree size: 162
+29-Feb-24 11:47:18 - root - INFO - Starting run.py
+29-Feb-24 11:47:18 - root - INFO - Using default config path : config/default.toml
+29-Feb-24 11:47:18 - root - INFO - Player 1 is using human and Player 2 is using minimax

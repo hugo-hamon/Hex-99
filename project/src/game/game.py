@@ -84,7 +84,6 @@ class Game:
             return
         # test get move
         move = self.player_controllers[self.current_player.name](self)
-        cProfile.runctx('self.player_controllers[self.current_player.name](self)', globals(), locals(), filename='test_get_move.prof')
         if move is None or self.board[move] != BoardState.EMPTY:
             return
         self.play(move)
