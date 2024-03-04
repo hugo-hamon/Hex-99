@@ -24,6 +24,7 @@ if __name__ == "__main__":
     path = DEFAULT_CONFIG_PATH
     if argv == 2:
         path = sys.argv[1]
+        path = f"config/{path}.toml"
         logging.info(f"Using config path : {path}")
     else:
         logging.info(f"Using default config path : {path}")
