@@ -1,11 +1,18 @@
-from src.game.graph import GameGraphManager
-from src.config import load_config
-from src.utils.heuristics_func import *
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import time
 
 if __name__ == "__main__":
-    path = "config/default.toml"
-    config = load_config(path)
-    G = GameGraphManager(config, True)
-    two_distance(G)
+    # Graph 20x20 wich make a grid
+    H = nx.grid_2d_graph(11, 11)
+    nx.draw(H, with_labels=True)
+    plt.show()
+    start = time.time()
+    for _ in range(20000):
+        H = H.copy()
+    print("Time to build graph:", time.time() - start)
+
+    
     
 

@@ -1,12 +1,14 @@
-from .game.game import Game, BoardState, PlayerOrder
 from .utils.manager_func import match_manager
 from .manager.user_manager import UserManager
+from .game.game import Game, PlayerOrder
 from .manager.manager import Manager
 from .config import load_config
 from typing import Optional
 import numpy as np
 import logging
 import eel
+
+RUN_EPISODES = 10
 
 
 class App:
@@ -40,6 +42,7 @@ class App:
                 PlayerOrder.PLAYER2.name: self.player2.get_move
             }
         )
+        self.game.create_board()
 
         if self.config.graphics.graphics_enabled:
             eel.init("src/graphics/web")
@@ -51,7 +54,7 @@ class App:
                 shutdown_delay=3
             )
         else:
-            self.game.run()
+            self.game.run(RUN_EPISODES)
 
     def expose_functions(self) -> None:
         """Expose functions to JavaScript"""
@@ -98,15 +101,11 @@ class App:
             else:
                 return isinstance(self.player2, UserManager)
 
-    def eel_get_board(self) -> Optional[list[list[BoardState]]]:
+    def eel_get_board(self) -> Optional[list[list[int]]]:
         """Return the board"""
         if self.game:
-            board = self.game.get_board().tolist()
-            for row in board:
-                for i, cell in enumerate(row):
-                    row[i] = cell.value
-            return board
-        
+            return self.game.get_board().tolist()
+
     def eel_reset_game(self) -> None:
         """Reset the game"""
         if self.game:

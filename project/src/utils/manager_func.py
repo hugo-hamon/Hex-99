@@ -1,3 +1,4 @@
+from ..manager.alpha_beta_manager import AlphaBetaManager
 from ..manager.minimax_manager import MinimaxManager
 from ..manager.random_manager import RandomManager
 from ..manager.user_manager import UserManager
@@ -16,6 +17,8 @@ def match_manager(config: Config, manager_name: str) -> Manager:
             return RandomManager(config)
         case "minimax":
             return MinimaxManager(config)
+        case "alpha_beta":
+            return AlphaBetaManager(config)
         case _:
             logging.error(
                 f'Found "{manager_name}" in class App in method match_manager'

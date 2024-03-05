@@ -1,12 +1,15 @@
 from __future__ import annotations
 from ..game.game import Game
+from typing import Optional
 
 
 class Node:
 
-    def __init__(self, game: Game, value: float, children: list[Node] = []) -> None:
+    def __init__(self, game: Game, value: float, children: Optional[list[Node]] = None) -> None:
         self.game = game
         self.value = value
+        if children is None:
+            children = []
         self.children = children
 
     # Request
@@ -42,3 +45,9 @@ class Node:
         for child in self.children:
             size += child.get_tree_size()
         return size
+    
+    def display(self, depth: int = 0) -> None:
+        """Display the tree"""
+        print(f"{' ' * depth}{self.game.get_move_history()[-1][1]}: {self.value}")
+        for child in self.children:
+            child.display(depth + 1)

@@ -9,6 +9,11 @@ class Minimax:
 
 
 @dataclass
+class AlphaBeta:
+    depth: int
+
+
+@dataclass
 class User:
     player1_algorithm: str
     player2_algorithm: str
@@ -23,7 +28,7 @@ class Graphics:
 class Game:
     board_width: int
     board_height: int
-    allow_backtrack: bool
+
 
 @dataclass
 class Config:
@@ -31,6 +36,7 @@ class Config:
     graphics: Graphics
     game: Game
     minimax: Minimax
+    alpha_beta: AlphaBeta
 
 
 def load_config(config_path: str) -> Config:
