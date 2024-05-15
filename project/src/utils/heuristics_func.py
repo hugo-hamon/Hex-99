@@ -10,23 +10,27 @@ from typing import Optional
 
 class Heuristic(Enum):
     """Enum for the heuristics"""
-    RANDOM = "random"  # Return a random value between -1 and 1
+    # Return a random value between -1 and 1
+    RANDOM = "random"
     # Return the difference between the two distances of each player
     TWO_DISTANCE = "two_distance"
+    # Use A* to find the shortest path between the two edges
+    A_STAR = "a_star"
 
 
 def evaluate(game: Game, player: PlayerOrder, heuristic: Heuristic) -> float:
     """Return a value for the given game state using the given heuristic"""
     if game.is_over():
         if game.get_winner() == player:
-            return float('inf')
-        return float('-inf')
+            return 1000
+        return -1000
 
     if heuristic == Heuristic.RANDOM:
         return random_heuristic()
     if heuristic == Heuristic.TWO_DISTANCE:
-        return two_distance(game, player)
-    return 0
+        return -two_distance(game, player)
+    if heuristic == Heuristic.A_STAR:
+        return a_star(game, player)
 
 
 def random_heuristic() -> float:
@@ -36,8 +40,8 @@ def random_heuristic() -> float:
 
 def two_distance(game: Game, player: PlayerOrder) -> float:
     """Return the difference between the two distances of each player"""
-    player_1 = game.get_current_player()
-    player_2 = game.get_opponent()
+    player_1 = player
+    player_2 = PlayerOrder.PLAYER1 if player == PlayerOrder.PLAYER2 else PlayerOrder.PLAYER2
     p1_graph = game.get_graph(player_1)
     p2_graph = game.get_graph(player_2)
     p1_start, p1_end, _, _ = game.get_start_end_order_edge(player_1)
@@ -93,3 +97,18 @@ def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_
         nodes_values[node] = high_value
     del nodes_values[target]
     return nodes_values
+
+
+def a_star(game: Game, player: PlayerOrder) -> float:
+    """Return the shortest path between the start and end using the A* algorithm"""
+    p1_graph = game.get_graph(PlayerOrder.PLAYER1)
+    p2_graph = game.get_graph(PlayerOrder.PLAYER2)
+    p1_start, p1_end, _, _ = game.get_start_end_order_edge(PlayerOrder.PLAYER1)
+    p2_start, p2_end, _, _ = game.get_start_end_order_edge(PlayerOrder.PLAYER2)
+
+    p1_paths = list(nx.all_shortest_paths(p1_graph, p1_start, p1_end, weight="weight"))
+    p2_paths = list(nx.all_shortest_paths(p2_graph, p2_start, p2_end, weight="weight"))
+
+    if player == PlayerOrder.PLAYER1:
+        return len(p1_paths) - len(p2_paths)
+    return len(p2_paths) - len(p1_paths)

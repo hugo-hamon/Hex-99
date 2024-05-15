@@ -1,7 +1,7 @@
 from ..utils.heuristics_func import Heuristic, evaluate
+from ..game.game import Game, PlayerOrder
 from ..utils.node import Node
 from .manager import Manager
-from ..game.game import Game
 from ..config import Config
 from typing import Optional
 import logging
@@ -18,50 +18,56 @@ class AlphaBetaManager(Manager):
         """Reset the manager"""
         pass
 
+    def check_for_winning_move(self, game: Game) -> Optional[tuple[int, int]]:
+        """Check if there is a winning move in the current game state"""
+        for move in game.get_valid_moves(game.get_current_player()):
+            game_copy = game.copy()
+            game_copy.move(move)
+            if game_copy.is_over():
+                return move
+        return None
+
     def get_move(self, game: Game) -> Optional[tuple[int, int]]:
         """Return the best move using the alpha beta algorithm"""
-        tree = self.alpha_beta_build_tree(game, self.config.alpha_beta.depth, float('-inf'), float('inf'), True)
-        best_move = None
-        best_value = float('-inf')
+        return self.alphabeta(
+            game, self.config.alpha_beta.depth, float('-inf'), float('inf'),
+            True, game.get_current_player()
+        )[1]
 
-        logging.info(f"AlphaBeta Tree size: {tree.get_tree_size()}")
-
-        for child in tree.get_children():
-            if child.get_value() > best_value:
-                best_value = child.get_value()
-                best_move = child.get_game().get_move_history()[-1][1]
-        return best_move
-
-
-    def alpha_beta_build_tree(self, game: Game, depth: int, alpha: float, beta: float, maximizing_player: bool) -> Node:
-        """Build a partial tree using alpha-beta pruning"""
+    def alphabeta(self, game: Game, depth: int, alpha: float, beta: float, maximizing_player: bool, player: PlayerOrder) -> tuple[float, Optional[tuple[int, int]]]:
+        """Alpha-beta pruning algorithm"""
         if depth == 0 or game.is_over():
-            return Node(game, evaluate(game, game.get_current_player(), Heuristic.TWO_DISTANCE))
-        
-        node = Node(game, 0)
+            return evaluate(game, player, Heuristic.A_STAR), None
+
+        best_move = None
+
         if maximizing_player:
             value = float('-inf')
             for move in game.get_valid_moves(game.get_current_player()):
                 game_copy = game.copy()
                 game_copy.move(move)
-                child = self.alpha_beta_build_tree(game_copy, depth - 1, alpha, beta, False)
-                value = max(value, child.get_value())
+                move_value, _ = self.alphabeta(
+                    game_copy, depth - 1, alpha, beta, False, player
+                )
+                if move_value > value:
+                    value = move_value
+                    best_move = move
                 alpha = max(alpha, value)
-                if beta <= alpha and alpha != float('inf'):
+                if value >= beta:
                     break
-                node.add_child(child)
-            node.set_value(value)
-            return node
         else:
             value = float('inf')
             for move in game.get_valid_moves(game.get_current_player()):
                 game_copy = game.copy()
                 game_copy.move(move)
-                child = self.alpha_beta_build_tree(game_copy, depth - 1, alpha, beta, True)
-                value = min(value, child.get_value())
+                move_value, _ = self.alphabeta(
+                    game_copy, depth - 1, alpha, beta, True, player
+                )
+                if move_value < value:
+                    value = move_value
+                    best_move = move
                 beta = min(beta, value)
-                if beta <= alpha and beta != float('-inf'):
+                if value <= alpha:
                     break
-                node.add_child(child)
-            node.set_value(value)
-            return node
+        
+        return value, best_move

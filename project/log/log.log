@@ -1,16 +1,8 @@
-05-Mar-24 14:04:27 - root - INFO - Starting run.py
-05-Mar-24 14:04:27 - root - INFO - Using default config path : config/default.toml
-05-Mar-24 14:04:27 - root - INFO - Player 1 is using alpha_beta and Player 2 is using human
-05-Mar-24 14:04:28 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-03-05 14:04:28] "GET /index.html HTTP/1.1" 200 2888 0.001468
-05-Mar-24 14:04:28 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-03-05 14:04:28] "GET /eel.js HTTP/1.1" 200 6219 0.000998
-05-Mar-24 14:04:28 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-03-05 14:04:28] "GET /css/index.css HTTP/1.1" 200 3756 0.001326
-05-Mar-24 14:04:28 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-03-05 14:04:28] "GET /js/index.js HTTP/1.1" 200 8736 0.001003
-05-Mar-24 14:04:28 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-03-05 14:04:28] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
-05-Mar-24 14:04:32 - root - INFO - AlphaBeta Tree size: 1941
-05-Mar-24 14:04:36 - root - INFO - AlphaBeta Tree size: 1964
-05-Mar-24 14:04:43 - root - INFO - AlphaBeta Tree size: 3384
-05-Mar-24 14:04:48 - root - INFO - AlphaBeta Tree size: 2198
-05-Mar-24 14:04:51 - root - INFO - AlphaBeta Tree size: 2224
-05-Mar-24 14:04:52 - root - INFO - AlphaBeta Tree size: 397
-05-Mar-24 14:04:54 - root - INFO - AlphaBeta Tree size: 60
-05-Mar-24 14:04:59 - root - INFO - AlphaBeta Tree size: 1941
+28-Apr-24 17:15:18 - root - INFO - Starting run.py
+28-Apr-24 17:15:18 - root - INFO - Using default config path : config/default.toml
+28-Apr-24 17:15:18 - root - INFO - Player 1 is using alpha_beta and Player 2 is using alpha_beta
+28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /index.html HTTP/1.1" 200 2888 0.000000
+28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /eel.js HTTP/1.1" 200 6219 0.000000
+28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
+28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
+28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /css/index.css HTTP/1.1" 200 3756 0.000000

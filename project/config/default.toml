@@ -1,16 +1,16 @@
 [user]
 player1_algorithm = "alpha_beta"
-player2_algorithm = "human"
+player2_algorithm = "alpha_beta"
 
 [graphics]
 graphics_enabled = true
 
 [game]
-board_width = 5
-board_height = 5
+board_width = 7
+board_height = 7
 
 [minimax]
-depth = 2
+depth = 3
 
 [alpha_beta]
 depth = 3

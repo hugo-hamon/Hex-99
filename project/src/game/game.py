@@ -8,6 +8,7 @@ from typing import Optional
 from enum import Enum
 import networkx as nx
 import numpy as np
+import time
 
 
 class PlayerOrder(Enum):
@@ -169,7 +170,11 @@ class Game:
         if len(self.move_history) == self.width * self.height:
             self.over = True
             return
+        start_time = time.time()
         move = self.player_controllers[self.current_player.name](self)
+        end_time = time.time()
+        empty_cells = self.width * self.height - len(self.move_history)
+        print(f"Time: {end_time - start_time} - Empty cells: {empty_cells}")
         if move is None or move not in self.get_valid_moves(self.current_player):
             return
         self.move(move)
