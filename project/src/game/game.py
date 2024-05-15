@@ -33,8 +33,7 @@ class Game:
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
 
-        self.move_history: list[tuple[nx.Graph, MOVE_TYPE, PlayerOrder]] = []
-        self.undo_history: list[tuple[nx.Graph, MOVE_TYPE, PlayerOrder]] = []
+        self.move_history: list[tuple[nx.Graph, nx.Graph, MOVE_TYPE, PlayerOrder]] = []
 
     # REQUESTS
     def get_size(self) -> tuple[int, int]:
@@ -81,7 +80,7 @@ class Game:
     def get_board(self) -> np.ndarray:
         """go through the move history and return the board"""
         board = np.zeros((self.width, self.height))
-        for _, move, player in self.move_history:
+        for _, _, move, player in self.move_history:
             board[move] = player.value
         return board
 
@@ -95,7 +94,7 @@ class Game:
             return self.get_current_player()
         return None
 
-    def get_move_history(self) -> list[tuple[nx.Graph, MOVE_TYPE, PlayerOrder]]:
+    def get_move_history(self) -> list[tuple[nx.Graph, nx.Graph, MOVE_TYPE, PlayerOrder]]:
         """Get the move history"""
         return self.move_history
 
@@ -134,7 +133,7 @@ class Game:
         opponent_graph = self.get_graph(self.get_opponent())
 
         if save:
-            self.move_history.append((graph.copy(), move, self.current_player))
+            self.move_history.append((graph.copy(), opponent_graph.copy(), move, self.current_player))
         neighbors = list(graph.neighbors(move))
         for neighbor in combinations(neighbors, 2):
             graph.add_edge(*neighbor)
@@ -149,19 +148,13 @@ class Game:
 
     def undo(self) -> None:
         """Undo the last move"""
-        if self.move_history:
-            graph, move, player = self.move_history.pop()
-            self.undo_history.append((graph, move, player))
-            self.current_player = player
-            self.graphs[player] = graph
+        if not self.move_history or self.is_over():
+            return
+        graph, opponent_graph, move, player = self.move_history.pop()
 
-    def redo(self) -> None:
-        """Redo the last move"""
-        if self.undo_history:
-            graph, move, player = self.undo_history.pop()
-            self.move_history.append((graph, move, player))
-            self.current_player = player
-            self.graphs[player] = graph
+        self.current_player = player
+        self.graphs[player] = graph
+        self.graphs[self.get_opponent()] = opponent_graph
 
     def update(self) -> None:
         """Update the game state"""
@@ -170,11 +163,7 @@ class Game:
         if len(self.move_history) == self.width * self.height:
             self.over = True
             return
-        start_time = time.time()
         move = self.player_controllers[self.current_player.name](self)
-        end_time = time.time()
-        empty_cells = self.width * self.height - len(self.move_history)
-        print(f"Time: {end_time - start_time} - Empty cells: {empty_cells}")
         if move is None or move not in self.get_valid_moves(self.current_player):
             return
         self.move(move)
@@ -183,7 +172,6 @@ class Game:
         """Reset the game"""
         self.create_board()
         self.move_history = []
-        self.undo_history = []
         self.over = False
         self.current_player = PlayerOrder.PLAYER1
 
@@ -215,7 +203,6 @@ class Game:
         }
         new_game.current_player = self.current_player
         new_game.move_history = self.move_history.copy()
-        new_game.undo_history = self.undo_history.copy()
         new_game.over = self.over
         return new_game
 

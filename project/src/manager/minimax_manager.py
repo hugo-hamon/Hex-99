@@ -1,17 +1,16 @@
 from ..utils.heuristics_func import Heuristic, evaluate
 from ..game.game import Game, PlayerOrder
-from ..utils.node import Node
 from .manager import Manager
 from typing import Optional
 from ..config import Config
-import logging
 
 
 class MinimaxManager(Manager):
 
-    def __init__(self, config: Config) -> None:
+    def __init__(self, config: Config, depth: int) -> None:
         super().__init__(config)
-        if self.config.minimax.depth < 1:
+        self.depth = depth
+        if depth < 1:
             raise ValueError("Minimax depth should be at least 1")
 
     def reset(self) -> None:
@@ -21,7 +20,7 @@ class MinimaxManager(Manager):
     def get_move(self, game: Game) -> Optional[tuple[int, int]]:
         """Return the best move using the minimax algorithm"""
         return self.minimax(
-            game, self.config.minimax.depth, True, game.get_current_player()
+            game, self.depth, True, game.get_current_player()
         )[1]
 
     def minimax(self, game: Game, depth: int, maximizing_player: bool, player: PlayerOrder) -> tuple[float, Optional[tuple[int, int]]]:

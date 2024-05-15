@@ -234,13 +234,6 @@ async function main() {
 
 main();
 
-/*
-<button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
-<button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
-<button id="redo_button" class="game_button" onclick="redo()">Refaire</button>
-<button id="pass_button" class="game_button" onclick="pass()">Passer</button>
-*/
-
 async function reset() {
     eel.eel_reset_game()();
     main();
@@ -249,11 +242,12 @@ async function reset() {
 async function undo() {
     eel.eel_undo()();
 }
-            
-async function redo() {
-    eel.eel_redo()();
-}
 
 async function pass_turn() {
     eel.eel_pass_turn()();
+}
+
+function exit() {
+    eel.eel_exit()();
+    window.close();
 }
