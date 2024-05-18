@@ -1,8 +1,8 @@
-28-Apr-24 17:15:18 - root - INFO - Starting run.py
-28-Apr-24 17:15:18 - root - INFO - Using default config path : config/default.toml
-28-Apr-24 17:15:18 - root - INFO - Player 1 is using alpha_beta and Player 2 is using alpha_beta
-28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /index.html HTTP/1.1" 200 2888 0.000000
-28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /eel.js HTTP/1.1" 200 6219 0.000000
-28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /js/index.js HTTP/1.1" 200 8736 0.000000
-28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
-28-Apr-24 17:15:18 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-04-28 17:15:18] "GET /css/index.css HTTP/1.1" 200 3756 0.000000
+18-May-24 15:13:37 - root - INFO - Starting run.py
+18-May-24 15:13:37 - root - INFO - Using default config path : config/default.toml
+18-May-24 15:13:37 - root - INFO - Player 1 is using alpha_beta and Player 2 is using alpha_beta
+18-May-24 15:13:37 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-18 15:13:37] "GET /index.html HTTP/1.1" 200 2888 0.000000
+18-May-24 15:13:37 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-18 15:13:37] "GET /css/index.css HTTP/1.1" 200 3756 0.007999
+18-May-24 15:13:37 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-18 15:13:37] "GET /eel.js HTTP/1.1" 200 6219 0.008003
+18-May-24 15:13:37 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-18 15:13:37] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000000
+18-May-24 15:13:37 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-18 15:13:37] "GET /js/index.js HTTP/1.1" 200 8736 0.000000

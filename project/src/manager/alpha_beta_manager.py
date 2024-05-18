@@ -1,10 +1,8 @@
 from ..utils.heuristics_func import Heuristic, evaluate
 from ..game.game import Game, PlayerOrder
-from ..utils.node import Node
 from .manager import Manager
 from ..config import Config
 from typing import Optional
-import logging
 
 
 class AlphaBetaManager(Manager):
@@ -69,5 +67,5 @@ class AlphaBetaManager(Manager):
                 beta = min(beta, value)
                 if value <= alpha:
                     break
-        
+
         return value, best_move
