@@ -100,29 +100,39 @@ class Game:
 
     # COMMANDS
     def create_board(self) -> None:
-        """Create a board of size x size"""
+        """Create a graph representation of hex for a board of size x size"""
         self.graphs = {
             PlayerOrder.PLAYER1: nx.Graph(),
             PlayerOrder.PLAYER2: nx.Graph()
         }
 
-        # Add neighbors edges
+        # For each player :
         for player_order in PlayerOrder:
             graph = self.graphs[player_order]
+            start, end, order, edge_size = self.get_start_end_order_edge(
+                player_order
+            )
+            
+            # Add nodes
             graph.add_nodes_from(
                 [(i, j) for i in range(self.width) for j in range(self.height)]
             )
+
+            # Add adjacency edges (ie connect (0,0) to (0,1), (1,0) and (1,1)...)
             for node in graph.nodes:
                 neighbors = hex_neighbors(node, self.config)
                 neighbors_edges = zip([(node)] * len(neighbors), neighbors)
                 graph.add_edges_from(neighbors_edges)
 
-        # Add two nodes, one on each side, to detect if a player has won
-        for player_order in PlayerOrder:
-            start, end, order, edge_size = self.get_start_end_order_edge(
-                player_order
-            )
-            graph = self.graphs[player_order]
+            # Add border edges (ie connect (0,0) to (0,1), (0,2), (0,3) and (0,4)...)
+            for i in range(edge_size):
+                for j in range(edge_size):
+                    if i == j:
+                        continue
+                    graph.add_edge((0, i)[::order], (0, j)[::order])
+                    graph.add_edge((edge_size - 1, i)[::order], (edge_size - 1, j)[::order])
+
+            # Add two nodes, one on each side, to detect if a player has won
             for i in range(edge_size):
                 graph.add_edge(start, (0, i)[::order])
                 graph.add_edge(end, (edge_size - 1, i)[::order])
@@ -209,8 +219,9 @@ class Game:
     def draw_graph(self, player: PlayerOrder) -> None:
         """Draw the graph of the player"""
         graph = self.get_graph(player)
+        # Not straight to see all edges, TODO replace border edges with curved edges
         pos = {
-            node: np.array([node[0] + 0.5 * node[1], -node[1]])
+            node: np.array([node[0] + 0.5 * node[1] + 0.2 * (node[1] % 2), - node[1] + 0.2 * (node[0] % 2)])
             for node in graph.nodes
         }
         nx.draw(graph, pos, with_labels=True)

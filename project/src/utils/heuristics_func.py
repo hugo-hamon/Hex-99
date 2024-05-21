@@ -48,7 +48,6 @@ def two_distance(game: Game, player: PlayerOrder) -> float:
     p2_start, p2_end, _, _ = game.get_start_end_order_edge(player_2)
     width, height = game.get_size()
     high_value = width * height
-
     distance_p1_start = get_two_distance(game, p1_graph, p1_start, high_value)
     distance_p1_end = get_two_distance(game, p1_graph, p1_end, high_value)
     distance_p2_start = get_two_distance(game, p2_graph, p2_start, high_value)

@@ -38,7 +38,7 @@ class AlphaBetaManager(Manager):
     def alphabeta(self, game: Game, depth: int, alpha: float, beta: float, maximizing_player: bool, player: PlayerOrder) -> tuple[float, Optional[tuple[int, int]]]:
         """Alpha-beta pruning algorithm"""
         if depth == 0 or game.is_over():
-            return evaluate(game, player, Heuristic.A_STAR), None
+            return evaluate(game, player, Heuristic.TWO_DISTANCE), None
 
         best_move = None
 
