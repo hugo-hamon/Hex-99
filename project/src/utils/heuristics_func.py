@@ -28,7 +28,7 @@ def evaluate(game: Game, player: PlayerOrder, heuristic: Heuristic) -> float:
     if heuristic == Heuristic.RANDOM:
         return random_heuristic()
     if heuristic == Heuristic.TWO_DISTANCE:
-        return -two_distance(game, player)
+        return two_distance(game, player)
     if heuristic == Heuristic.A_STAR:
         return a_star(game, player)
 
@@ -54,32 +54,12 @@ def two_distance(game: Game, player: PlayerOrder) -> float:
             node: distance_start[node] + distance_end[node]
             for node in game.get_valid_moves(player_1)
         }
-    # g = nx.DiGraph()
-    # g.add_nodes_from(node_values[player_1].keys())
-    # pos = {
-    #     node: np.array([node[0] + 0.5 * node[1], - node[1]])
-    #     for node in node_values[player_1].keys()
-    # }
-    # nx.draw(g, pos=pos, labels=node_values[player_1], font_color='white')
-    # plt.title("Player 1")
-    # plt.show()
-    # g = nx.DiGraph()
-    # g.add_nodes_from(node_values[player_2].keys())
-    # pos = {
-    #     node: np.array([node[0] + 0.5 * node[1], - node[1]])
-    #     for node in node_values[player_2].keys()
-    # }
-    # nx.draw(g, pos=pos, labels=node_values[player_2], font_color='white')
-    # plt.title("Player 2")
-    # plt.show()
-    return min(node_values[player_1].values()) - min(node_values[player_1].values())
+    return min(node_values[player_2].values()) - min(node_values[player_1].values())
 
 
 def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_value: int) -> dict:
     nodes = game.get_graph_valid_moves(graph)
-    nodes_values: dict[MOVE_TYPE, Optional[int]] = {
-        node: None for node in nodes
-    }
+    nodes_values: dict[MOVE_TYPE, int] = defaultdict(lambda: high_value)
     nodes_values[target] = 0
 
     # Set the values of the border nodes to 1
@@ -89,8 +69,8 @@ def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_
 
     # Set nodes with fewer than 2 neighbors to high values
     for node in nodes:
-        if len(graph.neighbors(node)) < 2:
-            nodes_values[node] = high_value
+        if len(list(graph.neighbors(node))) < 2:
+            # implicit nodes_values[node] = high_value
             nodes.remove(node)
     
     progress = True
@@ -101,11 +81,9 @@ def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_
         temp_values = {}
         temp_nodes = nodes.copy()
         for node in nodes:
-            # Sort the neighbors by their values
-            # TODO only get the two smallest values
-            sorted_neighbors = sorted(graph.neighbors(node), key=lambda x: (nodes_values[x] if x in nodes_values.keys() and nodes_values[x] != None else high_value,))
-            # If the second smallest value is not None, set value to equal to it + 1
-            if nodes_values[sorted_neighbors[1]] != None:
+            sorted_neighbors = sorted(graph.neighbors(node), key=lambda x: nodes_values[x])
+            # If the second smallest value is not high_value, set value to equal to it + 1
+            if nodes_values[sorted_neighbors[1]] != high_value:
                 temp_values[node] = nodes_values[sorted_neighbors[1]] + 1
                 progress = True
                 temp_nodes.remove(node)
@@ -115,15 +93,6 @@ def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_
     # For unreachable points, give high values
     for node in nodes:
         nodes_values[node] = high_value
-    g = nx.DiGraph()
-    g.add_nodes_from(nodes_values.keys())
-    pos = {
-        node: np.array([node[0] + 0.5 * node[1], - node[1]])
-        for node in nodes_values.keys()
-    }
-    nx.draw(g, pos=pos, labels=nodes_values, font_color='white')
-    plt.title("Player 1")
-    plt.show()
     del nodes_values[target]
 
     return nodes_values

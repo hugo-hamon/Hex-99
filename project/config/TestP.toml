@@ -5,8 +5,8 @@ player2_algorithm = "human"
 player2_depth = 1
 
 [game]
-board_width = 5
-board_height = 5
+board_width = 9
+board_height = 9
 
 [graphics]
 graphics_enabled = true

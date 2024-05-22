@@ -58,10 +58,19 @@ class Game:
 
     def get_valid_moves(self, player: PlayerOrder) -> list[MOVE_TYPE]:
         """Get the valid moves for the player"""
+        return list(self.get_graph(player).nodes)[:-2]
+
+    # TODO cache the valid moves
+    def get_turbo_valid_moves(self, player: PlayerOrder) -> list[MOVE_TYPE]:
+        """Get the valid moves for the player ordered by distance to the center of the board"""
         graph = self.get_graph(player)
         # -2 to remove the start and end nodes
-        return list(graph.nodes)[:-2]
-
+        moves = list(graph.nodes)[:-2]
+        # Reorder list so that center moves are checked first
+        center = np.array((self.width//2, self.height//2))
+        moves = sorted(moves, key=lambda move: np.linalg.norm(np.array(move) - center))
+        return moves
+    
     def get_graph_valid_moves(self, graph: nx.Graph) -> list[MOVE_TYPE]:
         """Get the valid moves for the player"""
         # -2 to remove the start and end nodes
