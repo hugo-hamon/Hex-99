@@ -38,6 +38,14 @@ class Node:
         """Set the value of the node"""
         self.value = value
 
+    def expand(self) -> list[Node]:
+        """Return all possible children of the node"""
+        for move in self.game.get_valid_moves(self.game.get_current_player()):
+            game_copy = self.game.copy()
+            game_copy.move(move)
+            self.children.append(Node(game_copy, 0))    
+        return self.children
+    
     # Utils
     def get_tree_size(self) -> int:
         """Return the size of the tree"""
