@@ -36,13 +36,13 @@ class AlphaBetaManager(Manager):
     def alphabeta(self, game: Game, depth: int, alpha: float, beta: float, maximizing_player: bool, player: PlayerOrder) -> tuple[float, Optional[tuple[int, int]]]:
         """Alpha-beta pruning algorithm"""
         if depth == 0 or game.is_over():
-            return evaluate(game, player, Heuristic.A_STAR), None
+            return evaluate(game, player, Heuristic.TWO_DISTANCE), None
 
         best_move = None
 
         if maximizing_player:
             value = float('-inf')
-            for move in game.get_valid_moves(game.get_current_player()):
+            for move in game.get_turbo_valid_moves(game.get_current_player()):
                 game_copy = game.copy()
                 game_copy.move(move)
                 move_value, _ = self.alphabeta(

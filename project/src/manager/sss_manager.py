@@ -21,7 +21,7 @@ class SSSManager(Manager):
 
     def check_for_winning_move(self, game: Game) -> Optional[Tuple[int, int]]:
         """Check if there is a winning move in the current game state"""
-        for move in game.get_valid_moves(game.get_current_player()):
+        for move in game.get_turbo_valid_moves(game.get_current_player()):
             game_copy = game.copy()
             game_copy.move(move)
             if game_copy.is_over():

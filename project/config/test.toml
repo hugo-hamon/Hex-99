@@ -1,6 +1,11 @@
 [user]
+<<<<<<< HEAD
 player1_algorithm = "nega_beta"
 player1_depth = 5
+=======
+player1_algorithm = "alpha_beta"
+player1_depth = 1
+>>>>>>> ba90158923c3d436a4a57fc3e3e3322e15b0de80
 player2_algorithm = "human"
 player2_depth = 1
 

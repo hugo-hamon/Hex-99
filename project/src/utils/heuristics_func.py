@@ -28,7 +28,7 @@ def evaluate(game: Game, player: PlayerOrder, heuristic: Heuristic) -> float:
     if heuristic == Heuristic.RANDOM:
         return random_heuristic()
     if heuristic == Heuristic.TWO_DISTANCE:
-        return -two_distance(game, player)
+        return two_distance(game, player)
     if heuristic == Heuristic.A_STAR:
         return a_star(game, player)
 
@@ -42,60 +42,59 @@ def two_distance(game: Game, player: PlayerOrder) -> float:
     """Return the difference between the two distances of each player"""
     player_1 = player
     player_2 = PlayerOrder.PLAYER1 if player == PlayerOrder.PLAYER2 else PlayerOrder.PLAYER2
-    p1_graph = game.get_graph(player_1)
-    p2_graph = game.get_graph(player_2)
-    p1_start, p1_end, _, _ = game.get_start_end_order_edge(player_1)
-    p2_start, p2_end, _, _ = game.get_start_end_order_edge(player_2)
     width, height = game.get_size()
     high_value = width * height
-
-    distance_p1_start = get_two_distance(game, p1_graph, p1_start, high_value)
-    distance_p1_end = get_two_distance(game, p1_graph, p1_end, high_value)
-    distance_p2_start = get_two_distance(game, p2_graph, p2_start, high_value)
-    distance_p2_end = get_two_distance(game, p2_graph, p2_end, high_value)
-    node_values = {
-        node: distance_p1_start[node] + distance_p1_end[node] -
-        distance_p2_start[node] - distance_p2_end[node]
-        for node in game.get_valid_moves(player_1)
-    }
-    return min(node_values.values())
+    node_values = {player_1: {}, player_2: {}}
+    for player in [player_1, player_2]:
+        graph = game.get_graph(player)
+        start, end, _, _ = game.get_start_end_order_edge(player)
+        distance_start = get_two_distance(game, graph, start, high_value)
+        distance_end = get_two_distance(game, graph, end, high_value)
+        node_values[player] = {
+            node: distance_start[node] + distance_end[node]
+            for node in game.get_valid_moves(player_1)
+        }
+    return min(node_values[player_2].values()) - min(node_values[player_1].values())
 
 
 def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_value: int) -> dict:
     nodes = game.get_graph_valid_moves(graph)
-    nodes_values: dict[MOVE_TYPE, Optional[int]] = {
-        node: None for node in nodes
-    }
+    nodes_values: dict[MOVE_TYPE, int] = defaultdict(lambda: high_value)
     nodes_values[target] = 0
+
+    # Set the values of the border nodes to 1
+    for node in graph.neighbors(target):
+        nodes_values[node] = 1
+        nodes.remove(node)
+
+    # Set nodes with fewer than 2 neighbors to high values
+    for node in nodes:
+        if len(list(graph.neighbors(node))) < 2:
+            # implicit nodes_values[node] = high_value
+            nodes.remove(node)
+    
     progress = True
+    # While new values are being added
     while progress:
         progress = False
+        # Create a new buffer for the values
         temp_values = {}
         temp_nodes = nodes.copy()
         for node in nodes:
-            second_delay = False
-            for neighbor in sorted(graph.neighbors(node), key=lambda x: (nodes_values[x] if x in nodes_values.keys() and nodes_values[x] != None else high_value,)):
-                if neighbor == target:
-                    progress = True
-                    temp_values[node] = 1
-                    temp_nodes.remove(node)
-                    break
-                if neighbor not in nodes_values.keys():
-                    continue
-                node_value = nodes_values[neighbor]
-                if node_value is not None:
-                    if second_delay == True:
-                        progress = True
-                        temp_values[node] = node_value + 1
-                        temp_nodes.remove(node)
-                        break
-                    second_delay = True
+            sorted_neighbors = sorted(graph.neighbors(node), key=lambda x: nodes_values[x])
+            # If the second smallest value is not high_value, set value to equal to it + 1
+            if nodes_values[sorted_neighbors[1]] != high_value:
+                temp_values[node] = nodes_values[sorted_neighbors[1]] + 1
+                progress = True
+                temp_nodes.remove(node)
         nodes_values.update(temp_values)
         nodes = temp_nodes
+
     # For unreachable points, give high values
     for node in nodes:
         nodes_values[node] = high_value
     del nodes_values[target]
+
     return nodes_values
 
 

@@ -32,7 +32,7 @@ class MinimaxManager(Manager):
 
         if maximizing_player:
             value = float('-inf')
-            for move in game.get_valid_moves(game.get_current_player()):
+            for move in game.get_turbo_valid_moves(game.get_current_player()):
                 game_copy = game.copy()
                 game_copy.move(move)
                 move_value, _ = self.minimax(
@@ -43,7 +43,7 @@ class MinimaxManager(Manager):
                     best_move = move
         else:
             value = float('inf')
-            for move in game.get_valid_moves(game.get_current_player()):
+            for move in game.get_turbo_valid_moves(game.get_current_player()):
                 game_copy = game.copy()
                 game_copy.move(move)
                 move_value, _ = self.minimax(
