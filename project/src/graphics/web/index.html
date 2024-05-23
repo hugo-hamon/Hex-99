@@ -51,6 +51,11 @@
     </div>
     <!-- End Header -->
     <div class="main">
+        <div id="themes-container">
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-dark')" style="background-color: #EEF7FF"></button>
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-white')" style="background-color: #fff"></button>
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-light')" style="background-color: #262D3C"></button>
+        </div>
         <canvas id="hexagon_canvas"></canvas>
         <div id="game_controls">
             <button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>

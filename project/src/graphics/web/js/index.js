@@ -46,23 +46,25 @@ class HexagonGame {
             this.ctx.lineTo(x + this.radius * Math.cos(angle), y + this.radius * Math.sin(angle));
         }
         this.ctx.closePath();
-        this.ctx.strokeStyle = 'white';
+
+        this.ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
         this.ctx.lineWidth = 3;
         this.ctx.stroke();
     }
 
     drawBoard() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let color = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
         for (let i = 0; i < this.rowNumber; i++) {
             // Draw row number
             this.ctx.font = "1.5em Poppins";
-            this.ctx.fillStyle = "white";
+            this.ctx.fillStyle = color;
             this.ctx.fillText(i + 1, this.centers[i][0][0] - this.radius * 2, this.centers[i][0][1] + 10);
             for (let j = 0; j < this.colNumber; j++) {
                 // Draw col number
                 if (i == 0) {
                     this.ctx.font = "1.5em Poppins";
-                    this.ctx.fillStyle = "white";
+                    this.ctx.fillStyle = color;
                     // Letter A is 65 in ASCII
                     this.ctx.fillText(String.fromCharCode(65 + j), this.centers[i][j][0] - this.radius, this.centers[i][j][1] - this.radius * 1.5);
                 }
