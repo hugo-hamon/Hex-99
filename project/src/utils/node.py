@@ -11,6 +11,7 @@ class Node:
         if children is None:
             children = []
         self.children = children
+        self.parent = None
 
     # Request
     def get_game(self) -> Game:

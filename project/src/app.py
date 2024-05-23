@@ -4,9 +4,10 @@ from .game.game import Game, PlayerOrder
 from .manager.manager import Manager
 from .config import load_config
 from typing import Optional
-import numpy as np
 import logging
+import toml
 import eel
+import os
 
 RUN_EPISODES = 10
 
@@ -25,22 +26,27 @@ class App:
         """Run the app with the given config"""
 
         self.player1 = match_manager(
-            self.config, self.config.user.player1_algorithm
+            self.config,
+            self.config.user.player1_algorithm,
+            self.config.user.player1_depth,
         )
 
         self.player2 = match_manager(
-            self.config, self.config.user.player2_algorithm
+            self.config,
+            self.config.user.player2_algorithm,
+            self.config.user.player2_depth,
         )
         logging.info(
-            f"Player 1 is using {self.config.user.player1_algorithm}" +
-            f" and Player 2 is using {self.config.user.player2_algorithm}"
+            f"Player 1 is using {self.config.user.player1_algorithm}"
+            + f" and Player 2 is using {self.config.user.player2_algorithm}"
         )
 
         self.game = Game(
-            self.config, {
+            self.config,
+            {
                 PlayerOrder.PLAYER1.name: self.player1.get_move,
-                PlayerOrder.PLAYER2.name: self.player2.get_move
-            }
+                PlayerOrder.PLAYER2.name: self.player2.get_move,
+            },
         )
         self.game.create_board()
 
@@ -51,7 +57,7 @@ class App:
                 "index.html",
                 mode="firefox",
                 cmdline_args=["--start-fullscreen"],
-                shutdown_delay=3
+                shutdown_delay=3,
             )
         else:
             self.game.run(RUN_EPISODES)
@@ -120,12 +126,55 @@ class App:
         if self.game:
             self.game.undo()
 
-    def eel_redo(self) -> None:
-        """Redo the last move"""
-        if self.game:
-            self.game.redo()
-
     def eel_pass_turn(self) -> None:
         """Pass the turn"""
         if self.game:
             self.game.pass_turn()
+
+    def eel_exit(self) -> None:
+        """Exit the game"""
+        logging.info("Exiting the game")
+        os._exit(0)
+
+    def eel_load_config_from_file(self, filename: str) -> None:
+        """Load the config"""
+        try:
+            self.config = load_config(f"config/{filename}")
+            self.player1 = match_manager(
+                self.config,
+                self.config.user.player1_algorithm,
+                self.config.user.player1_depth,
+            )
+            self.player2 = match_manager(
+                self.config,
+                self.config.user.player2_algorithm,
+                self.config.user.player2_depth,
+            )
+            self.game = Game(
+                self.config,
+                {
+                    PlayerOrder.PLAYER1.name: self.player1.get_move,
+                    PlayerOrder.PLAYER2.name: self.player2.get_move,
+                },
+            )
+            self.game.create_board()
+            print("Config loaded successfully")
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File {filename} not found")
+        except Exception as e:
+            raise e
+
+    def eel_save_config(self, config: dict, filename: str) -> None:
+        if config["user"]["player1_depth"] == None:
+            config["user"]["player1_depth"] = 0
+        if config["user"]["player2_depth"] == None:
+            config["user"]["player2_depth"] = 0
+        if config["game"]["board_width"] == None:
+            config["game"]["board_width"] = 0
+        if config["game"]["board_height"] == None:
+            config["game"]["board_height"] = 0
+
+        config["graphics"] = {"graphics_enabled": True}
+
+        with open(f"config/{filename}.toml", "w") as f:
+            toml.dump(config, f)

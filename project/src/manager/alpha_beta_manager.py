@@ -7,9 +7,10 @@ from typing import Optional
 
 class AlphaBetaManager(Manager):
 
-    def __init__(self, config: Config) -> None:
+    def __init__(self, config: Config, depth: int) -> None:
         super().__init__(config)
-        if self.config.alpha_beta.depth < 1:
+        self.depth = depth
+        if depth < 1:
             raise ValueError("AlphaBeta depth should be at least 1")
 
     def reset(self) -> None:
@@ -28,7 +29,7 @@ class AlphaBetaManager(Manager):
     def get_move(self, game: Game) -> Optional[tuple[int, int]]:
         """Return the best move using the alpha beta algorithm"""
         return self.alphabeta(
-            game, self.config.alpha_beta.depth, float('-inf'), float('inf'),
+            game, self.depth, float('-inf'), float('inf'),
             True, game.get_current_player()
         )[1]
 
