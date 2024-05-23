@@ -2,10 +2,7 @@ from ..game.game import Game, PlayerOrder, MOVE_TYPE
 from collections import defaultdict
 from enum import Enum
 import networkx as nx
-import matplotlib.pyplot as plt
-import numpy as np
 import random
-from typing import Optional
 
 
 class Heuristic(Enum):
@@ -68,7 +65,7 @@ def get_two_distance(game: Game, graph: nx.Graph, target: tuple[int, int], high_
         nodes.remove(node)
 
     # Set nodes with fewer than 2 neighbors to high values
-    for node in nodes:
+    for node in nodes.copy():
         if len(list(graph.neighbors(node))) < 2:
             # implicit nodes_values[node] = high_value
             nodes.remove(node)

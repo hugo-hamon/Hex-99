@@ -41,11 +41,11 @@ class NegaBetaManager(Manager):
     def negabeta(self, game: Game, depth: int, alpha: float, beta: float, color: int, player: PlayerOrder) -> tuple[float, Optional[tuple[int, int]]]:
         """Nega-beta pruning algorithm"""
         if depth == 0 or game.is_over():
-            return color * evaluate(game, player, Heuristic.A_STAR), None
+            return color * evaluate(game, player, Heuristic.TWO_DISTANCE), None
         
         best_move = None
         value = float('-inf')
-        for move in game.get_valid_moves(game.get_current_player()):
+        for move in game.get_turbo_valid_moves(game.get_current_player()):
             game_copy = game.copy()
             game_copy.move(move)
             move_value, _ = self.negabeta(
@@ -77,11 +77,11 @@ class NegaBetaManager(Manager):
                 return tt_entry["value"], tt_entry["move"]
             
         if depth == 0 or game.is_over():
-            return color * evaluate(game, player, Heuristic.A_STAR), None
+            return color * evaluate(game, player, Heuristic.TWO_DISTANCE), None
         
         best_move = None
         value = float('-inf')
-        for move in game.get_valid_moves(game.get_current_player()):
+        for move in game.get_turbo_valid_moves(game.get_current_player()):
             game_copy = game.copy()
             game_copy.move(move)
             move_value, _ = self.negabeta_transposition(

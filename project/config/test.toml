@@ -1,17 +1,12 @@
 [user]
-<<<<<<< HEAD
-player1_algorithm = "nega_beta"
-player1_depth = 5
-=======
 player1_algorithm = "alpha_beta"
-player1_depth = 1
->>>>>>> ba90158923c3d436a4a57fc3e3e3322e15b0de80
+player1_depth = 3
 player2_algorithm = "human"
 player2_depth = 1
 
 [game]
-board_width = 5
-board_height = 5
+board_width = 6
+board_height = 6
 
 [graphics]
 graphics_enabled = true

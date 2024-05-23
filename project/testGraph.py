@@ -1,6 +1,7 @@
 from src.game.game import Game, PlayerOrder
 from src.config import load_config
 from src.utils.heuristics_func import *
+import numpy as np
 import logging
 import sys
 import os
