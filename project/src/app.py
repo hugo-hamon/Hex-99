@@ -124,7 +124,10 @@ class App:
     def eel_undo(self) -> None:
         """Undo the last move"""
         if self.game:
-            self.game.undo()
+            if self.eel_is_current_player_human():
+                self.game.undo()
+                if not self.eel_is_current_player_human():
+                    self.game.undo()
 
     def eel_pass_turn(self) -> None:
         """Pass the turn"""
@@ -158,7 +161,6 @@ class App:
                 },
             )
             self.game.create_board()
-            print("Config loaded successfully")
         except FileNotFoundError:
             raise FileNotFoundError(f"File {filename} not found")
         except Exception as e:

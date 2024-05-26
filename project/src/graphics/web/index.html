@@ -52,11 +52,36 @@
     <!-- End Header -->
     <div class="main">
         <div id="themes-container">
-            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-dark')" style="background-color: #EEF7FF"></button>
-            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-white')" style="background-color: #fff"></button>
-            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-light')" style="background-color: #262D3C"></button>
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-dark')"
+                style="background-color: #EEF7FF"></button>
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-white')"
+                style="background-color: #fff"></button>
+            <button class="theme-button" onclick="document.documentElement.setAttribute('color-scheme','default-light')"
+                style="background-color: #262D3C"></button>
         </div>
         <canvas id="hexagon_canvas"></canvas>
+        <div id="game-information">
+            <section class="container">
+                <div class="hexagon">
+                    <div class="hexagon-child">
+                        <span class="one h6"></span>
+                        <span class="two h3"></span>
+                    </div>
+                </div>
+                <div class="hexagon">
+                    <div class="hexagon-child">
+                        <span class="one h1"></span>
+                        <span class="two h4"></span>
+                    </div>
+                </div>
+                <div class="hexagon">
+                    <div class="hexagon-child">
+                        <span class="one h5"></span>
+                        <span class="two h2"></span>
+                    </div>
+                </div>
+            </section>
+        </div>
         <div id="game_controls">
             <button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
             <button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
@@ -64,8 +89,10 @@
             <button id="quit_button" class="game_button" onclick="exit()">Quitter</button>
         </div>
     </div>
+
 </body>
 
 <script src="js/index.js"></script>
 <script src="js/sweetalert.min.js"></script>
+
 </html>

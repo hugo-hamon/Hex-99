@@ -196,6 +196,17 @@ class HexagonGame {
 
     // update function update every 1s
     async update() {
+        // Check for loading animation and activate it if the current player is not human
+        var loading = document.getElementById("game-information");
+
+        let is_human = await eel.eel_is_current_player_human()();
+        if (is_human) {
+            loading.style.opacity = 0;
+            loading.style.visibility = "hidden";
+        } else {
+            loading.style.opacity = 1;
+            loading.style.visibility = "visible";
+        }
         if (await this.checkGameOver()) {
             swal("Game Over", await eel.eel_get_winner()() + " wins!", "success");
             clearInterval(this.updateInterval);
@@ -212,7 +223,7 @@ class HexagonGame {
 async function displayBoard(hexagonGame) {
     var board = await eel.eel_get_board()();
     hexagonGame.drawBoard();
-    
+
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j] === 1) {

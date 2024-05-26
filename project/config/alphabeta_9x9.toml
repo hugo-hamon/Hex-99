@@ -1,8 +1,8 @@
 [user]
 player1_algorithm = "alpha_beta"
-player1_depth = 1
-player2_algorithm = "human"
-player2_depth = 1
+player1_depth = 2
+player2_algorithm = "alpha_beta"
+player2_depth = 2
 
 [game]
 board_width = 9
