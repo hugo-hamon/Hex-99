@@ -143,8 +143,8 @@ class Game:
 
             # Add two nodes, one on each side, to detect if a player has won
             for i in range(edge_size):
-                graph.add_edge(start, (0, i)[::order])
-                graph.add_edge(end, (edge_size - 1, i)[::order])
+                graph.add_edge(start, (0, i)[::order], to_end=True)
+                graph.add_edge(end, (edge_size - 1, i)[::order], to_end=True)
 
     def move(self, move: MOVE_TYPE, save: bool = True) -> None:
         """Make a move, add to the move history if save is True"""
@@ -230,10 +230,18 @@ class Game:
         graph = self.get_graph(player)
         # Not straight to see all edges, TODO replace border edges with curved edges
         pos = {
-            node: np.array([node[0] + 0.5 * node[1] + 0.2 * (node[1] % 2), - node[1] + 0.2 * (node[0] % 2)])
+            node: np.array([node[0] + 0.5 * node[1], - node[1]])
             for node in graph.nodes
         }
-        nx.draw(graph, pos, with_labels=True)
+        ax = plt.gca()
+        labels = {(x, y): "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[x] + str(y) for x, y in graph.nodes}
+        nx.draw_networkx(graph, pos, labels=labels, node_size=400, font_size=8, font_weight='bold', ax=ax)
+        start, end, _, _ = self.get_start_end_order_edge(player)
+        nx.draw_networkx_nodes(graph, pos, nodelist=[start, end], node_color='r', node_size=400)
+        end_edges = [(u,v,d) for u,v,d in graph.edges(data=True) if d.get('to_end')]
+        nx.draw_networkx_edges(graph, pos, edgelist=end_edges, edge_color='r', width=2)
+        color = 'Red' if player == PlayerOrder.PLAYER1 else 'Blue'
+        plt.title(f"Board representation for {color}")
         plt.show()
 
     def __hash__(self) -> int:

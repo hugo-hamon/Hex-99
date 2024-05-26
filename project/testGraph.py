@@ -16,9 +16,26 @@ LOGGING_CONFIG = {
 
 DEFAULT_CONFIG_PATH = "config/default.toml"
 
+def two_distance_custom(game: Game, player: PlayerOrder) -> float:
+    """Return the difference between the two distances of each player"""
+    player_1 = player
+    player_2 = PlayerOrder.PLAYER1 if player == PlayerOrder.PLAYER2 else PlayerOrder.PLAYER2
+    width, height = game.get_size()
+    high_value = width * height
+    node_values = {player_1: {}, player_2: {}}
+    for player in [player_1, player_2]:
+        graph = game.get_graph(player)
+        start, end, _, _ = game.get_start_end_order_edge(player)
+        distance_start = get_two_distance(game, graph, start, high_value)
+        distance_end = get_two_distance(game, graph, end, high_value)
+        node_values[player] = {
+            node: distance_start[node] + distance_end[node]
+            for node in game.get_valid_moves(player_1)
+        }
+    return player_1, player_2, node_values[player_1], node_values[player_2]
+
 if __name__ == "__main__":
     array = np.array([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
-    print(str(array))
 
     logging.basicConfig(**LOGGING_CONFIG)
     logging.info("Starting run.py")
@@ -41,3 +58,4 @@ if __name__ == "__main__":
     game.draw_graph(PlayerOrder.PLAYER1)
     game.draw_graph(PlayerOrder.PLAYER2)
     two_distance(game, PlayerOrder.PLAYER1)
+    
