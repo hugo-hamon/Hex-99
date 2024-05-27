@@ -1,7 +1,3 @@
-Voici le fichier README adapté pour le projet Hex :
-
----
-
 # Hex
 
 ## Description
