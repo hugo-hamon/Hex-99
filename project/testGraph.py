@@ -1,10 +1,29 @@
 from src.game.game import Game, PlayerOrder
 from src.config import load_config
 from src.utils.heuristics_func import *
+from dataclasses import dataclass, field
+from queue import PriorityQueue
 import numpy as np
 import logging
 import sys
 import os
+
+
+@dataclass(order=True)
+class PriorityQueueItem:
+    priority: float
+    value: int = field(compare=False)
+
+
+
+queue = PriorityQueue()
+queue.put(PriorityQueueItem(0, 1))
+queue.put(PriorityQueueItem(0, 2))
+
+print(queue.get())
+queue.put(PriorityQueueItem(0, 1))
+print(queue.get())
+
 
 LOGGING_CONFIG = {
     'level': logging.INFO,
