@@ -1,6 +1,7 @@
 from src.app import App
 import logging
 import sys
+import os
 
 LOGGING_CONFIG = {
     'level': logging.INFO,
@@ -13,6 +14,9 @@ LOGGING_CONFIG = {
 DEFAULT_CONFIG_PATH = "config/default.toml"
 
 if __name__ == "__main__":
+    if not os.path.exists("log"):
+        os.makedirs("log")
+
     logging.basicConfig(**LOGGING_CONFIG)
     logging.info("Starting run.py")
 

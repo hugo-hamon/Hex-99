@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="../css/settings.css" />
+    <title>Hex - Personnalisation</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header_content_container">
+            <div class="logo_container">
+                <a href="../index.html" class="logo_link">
+                    Hex
+                </a>
+            </div>
+            <div class="header_content">
+                <div class="header_content_item">
+                    <a href="../index.html" class="header_content_link">
+                        Jouer
+                    </a>
+                </div>
+                <div class="header_content_item">
+                    <a href="rules.html" class="header_content_link">
+                        Règles
+                    </a>
+                </div>
+                <div class="header_content_item">
+                    <a href="history.html" class="header_content_link">
+                        Histoire
+                    </a>
+                </div>
+                <div class="header_content_item">
+                    <a href="strategy.html" class="header_content_link">
+                        Stratégie
+                    </a>
+                </div>
+                <div class="header_content_item header_content_item_last">
+                    <a href="settings.html" class="header_content_link">
+                        Personnalisation
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="underline"></div>
+    </div>
+    <!-- End Header -->
+
+    <!-- Main Content -->
+    <div class="main">
+        <h1>Paramètres de Personnalisation</h1>
+        <form id="settings_form">
+            <div class="form_group">
+                <label for="player1_algorithm">Algorithme du Joueur 1:</label>
+                <select id="player1_algorithm" name="player1_algorithm">
+                    <option value="human">Humain</option>
+                    <option value="random">Aléatoire</option>
+                    <option value="minimax">Minimax</option>
+                    <option value="alpha_beta">Alpha-Beta</option>
+                    <option value="nega_beta">NegaBeta</option>
+                    <option value="sss">SSS*</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label for="player1_depth">Profondeur du Joueur 1:</label>
+                <input type="number" id="player1_depth" name="player1_depth" value="1">
+            </div>
+            <div class="form_group">
+                <label for="player2_algorithm">Algorithme du Joueur 2:</label>
+                <select id="player2_algorithm" name="player2_algorithm">
+                    <option value="human">Humain</option>
+                    <option value="random">Aléatoire</option>
+                    <option value="minimax">Minimax</option>
+                    <option value="alpha_beta">Alpha-Beta</option>
+                    <option value="negamax">NegaBeta</option>
+                    <option value="sss">SSS*</option>
+                </select>
+            </div>
+            <div class="form_group">
+                <label for="player2_depth">Profondeur du Joueur 2:</label>
+                <input type="number" id="player2_depth" name="player2_depth" value="1">
+            </div>
+            <div class="form_group">
+                <label for="board_width">Largeur du Plateau:</label>
+                <input type="number" id="board_width" name="board_width" value="5">
+            </div>
+            <div class="form_group">
+                <label for="board_height">Hauteur du Plateau:</label>
+                <input type="number" id="board_height" name="board_height" value="5">
+            </div>
+            <div class="form_group">
+                <input type="file" id="config_file" name="config_file" style="display:none;" onchange="loadConfigFromFile(event)">
+            </div>
+            <div class="form_actions">
+                <button type="button" onclick="document.getElementById('config_file').click()">Charger Configuration</button>
+                <button type="button" onclick="saveConfig()">Sauvegarder Configuration</button>
+                <button type="button" onclick="saveAndLoad()">Sauvegarder et Charger</button>
+            </div>
+        </form>
+    </div>
+    <!-- End Main Content -->
+</body>
+<script type="text/javascript" src="../js/settings.js"></script>
+<script src="../js/sweetalert2.all.min.js"></script>
+</html>

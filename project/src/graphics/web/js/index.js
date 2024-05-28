@@ -46,23 +46,25 @@ class HexagonGame {
             this.ctx.lineTo(x + this.radius * Math.cos(angle), y + this.radius * Math.sin(angle));
         }
         this.ctx.closePath();
-        this.ctx.strokeStyle = 'white';
+
+        this.ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
         this.ctx.lineWidth = 3;
         this.ctx.stroke();
     }
 
     drawBoard() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let color = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
         for (let i = 0; i < this.rowNumber; i++) {
             // Draw row number
             this.ctx.font = "1.5em Poppins";
-            this.ctx.fillStyle = "white";
+            this.ctx.fillStyle = color;
             this.ctx.fillText(i + 1, this.centers[i][0][0] - this.radius * 2, this.centers[i][0][1] + 10);
             for (let j = 0; j < this.colNumber; j++) {
                 // Draw col number
                 if (i == 0) {
                     this.ctx.font = "1.5em Poppins";
-                    this.ctx.fillStyle = "white";
+                    this.ctx.fillStyle = color;
                     // Letter A is 65 in ASCII
                     this.ctx.fillText(String.fromCharCode(65 + j), this.centers[i][j][0] - this.radius, this.centers[i][j][1] - this.radius * 1.5);
                 }
@@ -194,6 +196,17 @@ class HexagonGame {
 
     // update function update every 1s
     async update() {
+        // Check for loading animation and activate it if the current player is not human
+        var loading = document.getElementById("game-information");
+
+        let is_human = await eel.eel_is_current_player_human()();
+        if (is_human) {
+            loading.style.opacity = 0;
+            loading.style.visibility = "hidden";
+        } else {
+            loading.style.opacity = 1;
+            loading.style.visibility = "visible";
+        }
         if (await this.checkGameOver()) {
             swal("Game Over", await eel.eel_get_winner()() + " wins!", "success");
             clearInterval(this.updateInterval);
@@ -210,7 +223,6 @@ class HexagonGame {
 async function displayBoard(hexagonGame) {
     var board = await eel.eel_get_board()();
     hexagonGame.drawBoard();
-    
     for (let i = 0; i < board.length; i++) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j] === 1) {
@@ -234,13 +246,6 @@ async function main() {
 
 main();
 
-/*
-<button id="reset_button" class="game_button" onclick="reset()">Réinitialiser</button>
-<button id="undo_button" class="game_button" onclick="undo()">Annuler</button>
-<button id="redo_button" class="game_button" onclick="redo()">Refaire</button>
-<button id="pass_button" class="game_button" onclick="pass()">Passer</button>
-*/
-
 async function reset() {
     eel.eel_reset_game()();
     main();
@@ -249,11 +254,12 @@ async function reset() {
 async function undo() {
     eel.eel_undo()();
 }
-            
-async function redo() {
-    eel.eel_redo()();
-}
 
 async function pass_turn() {
     eel.eel_pass_turn()();
+}
+
+function exit() {
+    eel.eel_exit()();
+    window.close();
 }

@@ -1,12 +1,12 @@
 [user]
-player1_algorithm = "alpha_beta"
+player1_algorithm = "sss"
 player1_depth = 2
 player2_algorithm = "human"
-player2_depth = 2
+player2_depth = 1
 
 [game]
-board_width = 7
-board_height = 7
+board_width = 9
+board_height = 9
 
 [graphics]
 graphics_enabled = true
