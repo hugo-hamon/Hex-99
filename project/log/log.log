@@ -1,8 +1,18 @@
-26-Feb-24 17:48:31 - root - INFO - Starting run.py
-26-Feb-24 17:48:31 - root - INFO - Using default config path : config/default.toml
-26-Feb-24 17:48:31 - root - INFO - Player 1 is using human and Player 2 is using minimax
-26-févr.-24 18:07:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 18:07:19] "GET /index.html HTTP/1.1" 200 2822 0.002309
-26-févr.-24 18:07:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 18:07:19] "GET /eel.js HTTP/1.1" 200 6219 0.003720
-26-févr.-24 18:07:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 18:07:19] "GET /js/index.js HTTP/1.1" 200 8482 0.000707
-26-févr.-24 18:07:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 18:07:19] "GET /js/sweetalert.min.js HTTP/1.1" 200 41022 0.001642
-26-févr.-24 18:07:19 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-02-26 18:07:19] "GET /css/index.css HTTP/1.1" 200 3585 0.000632
+28-May-24 11:47:04 - root - INFO - Starting run.py
+28-May-24 11:47:04 - root - INFO - Using default config path : config/default.toml
+28-May-24 11:47:04 - root - INFO - Player 1 is using alpha_beta and Player 2 is using human
+28-May-24 11:47:05 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:05] "GET /index.html HTTP/1.1" 200 4070 0.000697
+28-May-24 11:47:05 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:05] "GET /eel.js HTTP/1.1" 200 6267 0.000279
+28-May-24 11:47:05 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:05] "GET /css/index.css HTTP/1.1" 200 7204 0.000273
+28-May-24 11:47:05 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:05] "GET /js/index.js HTTP/1.1" 200 8758 0.000192
+28-May-24 11:47:05 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:05] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000256
+28-May-24 11:47:07 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:07] "GET /html/settings.html HTTP/1.1" 200 4965 0.000540
+28-May-24 11:47:08 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:08] "GET /eel.js HTTP/1.1" 200 6267 0.000303
+28-May-24 11:47:08 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:08] "GET /js/settings.js HTTP/1.1" 200 4668 0.000357
+28-May-24 11:47:08 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:08] "GET /css/settings.css HTTP/1.1" 200 3948 0.000298
+28-May-24 11:47:08 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:08] "GET /js/sweetalert2.all.min.js HTTP/1.1" 200 76423 0.000360
+28-May-24 11:47:12 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:12] "GET /index.html HTTP/1.1" 200 4070 0.000406
+28-May-24 11:47:12 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:12] "GET /eel.js HTTP/1.1" 200 6267 0.000242
+28-May-24 11:47:12 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:12] "GET /js/index.js HTTP/1.1" 200 8758 0.000242
+28-May-24 11:47:12 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:12] "GET /css/index.css HTTP/1.1" 200 7204 0.000178
+28-May-24 11:47:12 - geventwebsocket.handler - INFO - 127.0.0.1 - - [2024-05-28 11:47:12] "GET /js/sweetalert.min.js HTTP/1.1" 200 41018 0.000187
